@@ -29,12 +29,7 @@ function Index() {
 
     return (
         <>
-            <h1>Hello world</h1>
-            <p>Counter {counter.value}</p>
-            <Button onClick={() => handleDecrementByAmount(2)}>-=2</Button>
-            <Button onClick={handleDecrement}>-</Button>
-            <Button onClick={handleIncrement}>+</Button>
-            <Button onClick={() => handleIncrementByAmount(2)}>+= 2</Button>
+
         </>
     )
 }
