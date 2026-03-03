@@ -1,0 +1,81 @@
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../database/database.ts";
+
+class QuizSession extends Model {
+    public id!: number;
+    public sessionCode!: number;
+    public title!: string;
+    public description!: string;
+    public status!: string;
+    public startAt!: Date;
+    public endAt!: Date;
+    public userId!: number;
+    public quizId!: number;
+    public sessionConfigId!: number;
+    public createdAt!: Date;
+    public updatedAt!: Date;
+}
+
+QuizSession.init(
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        sessionCode: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        startAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        },
+        endAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: "Users",
+                key: "id"
+            }
+        },
+        quizId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: "Quizes",
+                key: "id"
+            }
+        },
+        sessionConfigId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: "QuizSessionConfig",
+                key: "id"
+            }
+        }
+    }, 
+    {
+        sequelize,
+        tableName: "QuizSession"
+    }
+)
+
+export default QuizSession;
