@@ -6,7 +6,7 @@ function Header() {
     return (
         <Navbar expand="lg" style={{width: "100vw", height: "10vh", background: "#eef"}}>
             <Container>
-                <Navbar.Brand href="#home">Quiz Applcation</Navbar.Brand>
+                <Navbar.Brand href="/">Quiz Applcation</Navbar.Brand>
                     {!isRegister ? 
                         <Nav className="justify-content-end p-1">
                             <Nav.Link href="/login">
