@@ -4,7 +4,7 @@ import { Navbar, Nav, Dropdown, Container, Button } from "react-bootstrap"
 function Header() {
     let isRegister = false;
     return (
-        <Navbar expand="lg" style={{width: "100vw", background: "#eef"}}>
+        <Navbar expand="lg" style={{width: "100vw", height: "10vh", background: "#eef"}}>
             <Container>
                 <Navbar.Brand href="#home">Quiz Applcation</Navbar.Brand>
                     {!isRegister ? 
