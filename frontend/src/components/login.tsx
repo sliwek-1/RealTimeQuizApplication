@@ -2,26 +2,39 @@ import React from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form"
+import loginValidationSchema from "../formsValidationSchema/schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+type Inputs = {
+    email: string,
+    password: string
+}
 
 function Login() {
+    const resolver = yupResolver(loginValidationSchema)
+    const { register, handleSubmit, formState: {errors} } = useForm<Inputs>({ resolver });
+    const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
     return (
         <>
             <Container className="lg">
-                <Form className="d-flex flex-column align-items-center justify-content-start mt-5" style={{height: "70vh", minWidth: "40vw"}}>
+                <Form className="d-flex flex-column align-items-center justify-content-start mt-5" style={{height: "70vh", minWidth: "40vw"}} onSubmit={handleSubmit(onSubmit)}>
                     <Form.Label className="fs-2">Logowanie</Form.Label>
                     <Form.Group className="p-3 col-12 col-sm-8 col-md-7 col-lg-5">
                         <Form.Label>
                             Adres Email
                         </Form.Label>
-                        <Form.Control type="email" placeholder="Email" />
+                        <Form.Control type="email" placeholder="Email" {...register("email")}/>
+                        {errors.email && <Form.Label className="text-danger">{errors.email.message}</Form.Label>}
                     </Form.Group>
                     <Form.Group className="p-3 col-12 col-sm-8 col-md-7 col-lg-5">
                         <Form.Label>
                             Hasło
                         </Form.Label>
-                        <Form.Control type="password" placeholder="Hasło"/>
+                        <Form.Control type="password" placeholder="Hasło" {...register("password")}/>
+                        {errors.password && <Form.Label className="text-danger">{errors.password.message}</Form.Label>}
                     </Form.Group>
-                    <Button variant="primary" className="p-2 mt-5 col-12 col-sm-8 col-md-7 col-lg-4">
+                    <Button type="submit" variant="primary" className="p-2 mt-5 col-12 col-sm-8 col-md-7 col-lg-4">
                         Zaloguj
                     </Button>
                 </Form>
