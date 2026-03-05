@@ -12,7 +12,7 @@ const useLogin = () => {
     const login = async (data: LoginCretentials) => {
         try {
             setLoading(true);
-            let request = await fetch(`http://${config.host}:${config.port}/login`, {
+            let request:Response = await fetch(`http://${config.host}:${config.port}/api/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -26,7 +26,6 @@ const useLogin = () => {
             console.log(response)
 
         } catch (error) {
-            console.error(error)
             throw error;
         } finally {
             setLoading(false)
