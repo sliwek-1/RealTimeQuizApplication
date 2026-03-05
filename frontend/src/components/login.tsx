@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form"
 import loginValidationSchema from "../formsValidationSchema/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useLogin } from "../hooks/login";
 
 type Inputs = {
     email: string,
@@ -13,13 +14,15 @@ type Inputs = {
 function Login() {
     const resolver = yupResolver(loginValidationSchema)
     const { register, handleSubmit, formState: {errors} } = useForm<Inputs>({ resolver });
-    const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+    const { login, isLoading } = useLogin();
+    const onSubmit: SubmitHandler<Inputs> = (data) => login(data);
 
     return (
         <>
             <Container className="lg">
                 <Form className="d-flex flex-column align-items-center justify-content-start mt-5" style={{height: "70vh", minWidth: "40vw"}} onSubmit={handleSubmit(onSubmit)}>
                     <Form.Label className="fs-2">Logowanie</Form.Label>
+                    <Form.Label>{errors.root ? errors.root?.message : " "}</Form.Label>
                     <Form.Group className="p-3 col-12 col-sm-8 col-md-7 col-lg-5">
                         <Form.Label>
                             Adres Email
@@ -35,7 +38,7 @@ function Login() {
                         {errors.password && <Form.Label className="text-danger">{errors.password.message}</Form.Label>}
                     </Form.Group>
                     <Button type="submit" variant="primary" className="p-2 mt-5 col-12 col-sm-8 col-md-7 col-lg-4">
-                        Zaloguj
+                        {isLoading ? <p>Logowanie...</p> : <p>Zaloguj</p>}
                     </Button>
                 </Form>
             </Container>
