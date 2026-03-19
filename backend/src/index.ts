@@ -4,6 +4,8 @@ import sequelize from "./database/database.ts"; // postgres database instance
 import { Users, Quizes, QuizSession, QuizSessionConfig } from "./models/relationships.ts"; // database postgres models
 import cors from "cors";
 import loginRouter from "./routes/login.ts";
+import mongoose from "mongoose";
+
 
 const app = express();
 const port = 3000;
@@ -25,6 +27,14 @@ app.get('/', (req: Request, res: Response) => {
 app.listen(port, () => {
     console.log(`server is listen on port ${port}`);
 })
+
+const uri = 'mongodb://localhost:27017';
+
+mongoose.connect(uri)
+.then(() => console.log("MongoDB connected via Mongoose"))
+.catch(err => console.error("MongoDB connection error:", err));
+
+
 
 sequelize.sync({ alter: true })
     .then(() => {

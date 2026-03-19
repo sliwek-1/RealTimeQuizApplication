@@ -11,7 +11,7 @@ const questionsSchema = new Schema({
             questionCategory: String,
             questionType: String,
             answers: [{
-                text: { type: String, required: true},
+                text: { type: String, required: true },
                 isCorrect: Boolean,
             }]
         }
