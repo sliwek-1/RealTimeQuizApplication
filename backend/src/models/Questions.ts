@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
+
 const questionsSchema = new Schema({
     quizId: Number,
     questions: [
         {
+            questionId: Number,
             question: { type: String, required: true },
             questionImg: String,
             questionVideo: String,
