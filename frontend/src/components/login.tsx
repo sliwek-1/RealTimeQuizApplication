@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form"
-import loginValidationSchema from "../formsValidationSchema/schema";
+import { loginValidationSchema } from "../formsValidationSchema/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useLogin } from "../hooks/login";
 

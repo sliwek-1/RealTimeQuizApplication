@@ -32,7 +32,7 @@ const useLogin = () => {
         }
     }
 
-    return {login, isLoading};
+    return { login, isLoading };
 }
 
 export { useLogin };
