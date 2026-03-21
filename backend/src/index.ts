@@ -17,9 +17,9 @@ dotenv.config();
 
 
 const redis = new Redis({
-    port: Number(process.env.REDIS_PORT),
-    host: process.env.REDIS_HOST,
-    password: process.env.REDIS_PASSWORD
+    port: 6379,
+    host: "127.0.0.1",
+    password: ""
 })
 
 const redisStore = new RedisStore({
@@ -66,8 +66,6 @@ const uri = 'mongodb://localhost:27017';
 mongoose.connect(uri)
 .then(() => console.log("MongoDB connected via Mongoose"))
 .catch(err => console.error("MongoDB connection error:", err));
-
-
 
 sequelize.sync({ alter: true })
     .then(() => {
