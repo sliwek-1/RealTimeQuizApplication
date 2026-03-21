@@ -1,6 +1,5 @@
 import type {Response, Request, NextFunction} from "express";
 
-
 export async function registerValidation(req: Request, res: Response, next: NextFunction) {
     try {
         const {name, surrname, login, email, password} = req.body;
