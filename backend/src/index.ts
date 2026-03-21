@@ -7,8 +7,11 @@ import sequelize from "./database/database.ts"; // postgres database instance
 import { Users, Quizes, QuizSession, QuizSessionConfig } from "./models/relationships.ts"; // database postgres models
 import cors from "cors";
 import loginRouter from "./routes/login.ts";
+import registerRouter from "./routes/register.ts";
 import mongoose from "mongoose";
 import dotenv from "dotenv"
+
+import { registerValidation } from "./middleware/registerValidation.ts";
 
 
 const app = express();
@@ -37,21 +40,22 @@ app.use(cors({
 app.use(
     session({
         store: redisStore,
-        name: process.env.COOKIE_NAME,
-        sameSite: "Strict",
-        secret: process.env.SESSION_SECRET,
+        name: "redis_session",
+        secret: "secret",
         resave: false,
         saveUninitialized: false,
         cookie: {
             path: "/",
+            sameSite: "none",
             httpOnly: true,
-            secure: false,
+            secure: true,
             maxAge: 1000 * 60 * 60 * 24,
         },
     } as any)
 )
 
 app.use('/api/', loginRouter);
+app.use('/api/', registerValidation, registerRouter);
 
 app.get('/', (req: Request, res: Response) => {
     res.send("Hello typescript with express");
@@ -67,12 +71,14 @@ mongoose.connect(uri)
 .then(() => console.log("MongoDB connected via Mongoose"))
 .catch(err => console.error("MongoDB connection error:", err));
 
-sequelize.sync({ alter: true })
-    .then(() => {
-        app.listen(port, () => {
-            console.log(`Server is running at http://localhost:${port}`);
-        });
-    })
-    .catch(err => {
-        console.error('error sync database: ', err);
-    })
+(async () => {
+    sequelize.sync({ alter: true })
+        .then(() => {
+            app.listen(port, () => {
+                console.log(`Server is running at http://localhost:${port}`);
+            });
+        })
+        .catch(err => {
+            console.error('error sync database: ', err);
+        })
+})();

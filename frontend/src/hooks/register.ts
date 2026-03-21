@@ -24,8 +24,7 @@ const useRegister = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data),
-                credentials: 'include'
+                body: JSON.stringify(data)
             })
 
             const response = await request.json();
