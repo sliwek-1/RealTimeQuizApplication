@@ -20,12 +20,12 @@ function Register() {
     const resolver = yupResolver(registerValidationSchema);
     const {register, handleSubmit, formState: {errors}} = useForm<Inputs>({ resolver });
     const {registerUser, isLoading} = useRegister();
-    const onSubmit:SubmitHandler<Inputs> = (data) => registerUser(data);
+    const onSubmit: SubmitHandler<Inputs> = (data) => registerUser(data);
 
     return (
         <>
             <Container className="lg">
-                <Form className="d-flex flex-column align-items-center justify-content-center mt-5" style={{height: "70vh", minWidth: "40vw"}}>
+                <Form className="d-flex flex-column align-items-center justify-content-center mt-5" style={{height: "70vh", minWidth: "40vw"}}  onSubmit={handleSubmit(onSubmit)}>
                     <Form.Label className="fs-2">Rejestracja</Form.Label>
                     <Form.Label>{errors.root ? errors.root?.message : " "}</Form.Label>
                     <Form.Group className="p-3 col-12 col-sm-8 col-md-7 col-lg-5">
