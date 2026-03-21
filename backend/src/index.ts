@@ -1,14 +1,30 @@
 import express from "express";
+import session from "express-session";
+import { RedisStore } from "connect-redis";
+import { Redis } from "ioredis";
 import type { Request, Response } from "express";
 import sequelize from "./database/database.ts"; // postgres database instance
 import { Users, Quizes, QuizSession, QuizSessionConfig } from "./models/relationships.ts"; // database postgres models
 import cors from "cors";
 import loginRouter from "./routes/login.ts";
 import mongoose from "mongoose";
+import dotenv from "dotenv"
 
 
 const app = express();
 const port = 3000;
+dotenv.config();
+
+
+const redis = new Redis({
+    port: Number(process.env.REDIS_PORT),
+    host: process.env.REDIS_HOST,
+    password: process.env.REDIS_PASSWORD
+})
+
+const redisStore = new RedisStore({
+    client: redis
+})
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json());
@@ -17,6 +33,23 @@ app.use(cors({
     methods: ['GET', 'POST'],
     credentials: true,  
 }));
+
+app.use(
+    session({
+        store: redisStore,
+        name: process.env.COOKIE_NAME,
+        sameSite: "Strict",
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            path: "/",
+            httpOnly: true,
+            secure: false,
+            maxAge: 1000 * 60 * 60 * 24,
+        },
+    } as any)
+)
 
 app.use('/api/', loginRouter);
 
