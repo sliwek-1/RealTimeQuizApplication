@@ -1,13 +1,10 @@
 import express from "express";
 import type {Response, Request} from "express";
-
+import { register } from "../controllers/register.controller.ts";
+import { registerValidation } from "../middleware/registerValidation.ts";
 
 const registerRouter = express.Router();
 
-registerRouter.post('/register', (req: Request, res: Response) => {
-    console.log(req.sessionID);
-
-    res.status(200).json({message: `${req.sessionID}`});
-})
+registerRouter.post('/register', registerValidation,  register);
 
 export default registerRouter;

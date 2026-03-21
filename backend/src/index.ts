@@ -11,7 +11,6 @@ import registerRouter from "./routes/register.ts";
 import mongoose from "mongoose";
 import dotenv from "dotenv"
 
-import { registerValidation } from "./middleware/registerValidation.ts";
 
 
 const app = express();
@@ -55,7 +54,7 @@ app.use(
 )
 
 app.use('/api/', loginRouter);
-app.use('/api/', registerValidation, registerRouter);
+app.use('/api/', registerRouter);
 
 app.get('/', (req: Request, res: Response) => {
     res.send("Hello typescript with express");
