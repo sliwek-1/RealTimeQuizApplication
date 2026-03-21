@@ -1,7 +1,24 @@
 import React from "react";
 import { Form, Button, Container } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import loginValidationSchema from "../formsValidationSchema/schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+
+type Inputs {
+    name: String,
+    surrname: String,
+    login: String,
+    email: String,
+    password: String,
+}
 
 function Register() {
+    const resolver = yupResolver(registerValidationSchema);
+    const {register, handleSubmit, formState: {errors}} = useForm<Inputs>({ resolver });
+    const onSubmit:SubmitHandler<Inputs> = (data) => 
+
     return (
         <>
             <Container className="lg">
