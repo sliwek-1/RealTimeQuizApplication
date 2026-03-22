@@ -13,13 +13,14 @@ export const Route = createFileRoute('/')({
         });
 
         const res = await req.json();
-        //console.log(res.userData)
-        store.dispatch(addUserToStorage(res.userData));
+        console.log(res.userData)
 
         if(!req.ok) {
             store.dispatch(removeUserFromStorage());
             return { redirect: '/login' }
         };
+
+        store.dispatch(addUserToStorage(res?.userData));
     }
 })
 

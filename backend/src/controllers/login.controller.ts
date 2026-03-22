@@ -11,7 +11,7 @@ export async function login(req: Request, res: Response) {
 
         const user = await Users.findOne({
             where: { email },
-            attributes: ['uniqueId', 'name', 'secondName', 'email', 'password']
+            attributes: ['uniqueId', 'name', 'secondName', 'email', 'password', 'login']
         });
 
         if(!user) {
@@ -29,7 +29,8 @@ export async function login(req: Request, res: Response) {
             name: user.dataValues.name,
             surrname: user.dataValues.secondName,
             email: user.dataValues.email,
-            id: user.dataValues.uniqueId
+            id: user.dataValues.uniqueId,
+            login: user.dataValues.login
         }
 
         await redis.set(
@@ -49,7 +50,8 @@ export async function login(req: Request, res: Response) {
             name: user.dataValues.name,
             surrname: user.dataValues.secondName,
             email: user.dataValues.email,
-            id: user.dataValues.uniqueId
+            id: user.dataValues.uniqueId,
+            login: user.dataValues.login
         }});
 
     } catch (error) {

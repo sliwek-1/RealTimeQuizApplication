@@ -27,13 +27,13 @@ const useLogin = () => {
             });
 
             const response = await request.json();
-            
+            console.log(response)
             const userData = {
                 name: response.name,
                 surrname: response.surrname,
                 login: response.login,
                 email: response.email,
-                uniqueId: response.name,
+                uniqueId: response.id,
             }
 
             if(request.ok && response.message == "Logged in") {

@@ -5,11 +5,12 @@ import type { RootState } from "../store";
 
 function Header() {
     const userData = useSelector((state: RootState) => state.user);
+    console.log(userData)
     return (
         <Navbar expand="lg" style={{width: "100vw", height: "10vh", background: "#eef"}}>
             <Container>
                 <Navbar.Brand href="/">Quiz Applcation</Navbar.Brand>
-                    {!userData ? 
+                    {userData.uniqueId == "" ? 
                         <Nav className="justify-content-end p-1">
                             <Nav.Link href="/login">
                                 <Button variant="primary">Login</Button>
