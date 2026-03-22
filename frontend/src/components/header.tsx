@@ -1,13 +1,15 @@
 import React from "react";
-import { Navbar, Nav, Dropdown, Container, Button } from "react-bootstrap"
+import { Navbar, Nav, Dropdown, Container, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store";
 
 function Header() {
-    let isRegister = false;
+    const userData = useSelector((state: RootState) => state.user);
     return (
         <Navbar expand="lg" style={{width: "100vw", height: "10vh", background: "#eef"}}>
             <Container>
                 <Navbar.Brand href="/">Quiz Applcation</Navbar.Brand>
-                    {!isRegister ? 
+                    {!userData ? 
                         <Nav className="justify-content-end p-1">
                             <Nav.Link href="/login">
                                 <Button variant="primary">Login</Button>
@@ -20,7 +22,7 @@ function Header() {
                         <Nav className="justify-content-end p-1">
                            <Dropdown>
                                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                                    msliwinski
+                                    {userData.login}
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>

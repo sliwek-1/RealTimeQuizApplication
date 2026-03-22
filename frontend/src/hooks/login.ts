@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import config from "../config";
 import { useNavigate } from "@tanstack/react-router";
+import { useDispatch } from "react-redux";
+import { addUserToStorage } from "../features/counter/userSlice";
 
 type LoginCretentials = {
     email: string,
@@ -9,6 +11,7 @@ type LoginCretentials = {
 
 const useLogin = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isLoading, setLoading] = useState(false);
     
     const login = async (data: LoginCretentials) => {
@@ -24,8 +27,19 @@ const useLogin = () => {
             });
 
             const response = await request.json();
+            
+            const userData = {
+                name: response.name,
+                surrname: response.surrname,
+                login: response.login,
+                email: response.email,
+                uniqueId: response.name,
+            }
 
-            if(request.ok && response.message == "Logged in") navigate({to: '/'});
+            if(request.ok && response.message == "Logged in") {
+                dispatch(addUserToStorage(userData));
+                navigate({to: '/'});
+            } 
 
         } catch (error) {
             throw error;

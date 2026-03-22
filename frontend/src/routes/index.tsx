@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import FrontPage from "../components/frontPage";
 import config from "../config";
+import { store } from "../store";
+import { removeUserFromStorage, addUserToStorage } from "../features/counter/userSlice";
 
 export const Route = createFileRoute('/')({
     component: Index,
@@ -10,10 +12,14 @@ export const Route = createFileRoute('/')({
             credentials: 'include'
         });
 
-
         const res = await req.json();
-        console.log(res.userData)
-        if(!req.ok) return {redirect: '/login'};
+        //console.log(res.userData)
+        store.dispatch(addUserToStorage(res.userData));
+
+        if(!req.ok) {
+            store.dispatch(removeUserFromStorage());
+            return { redirect: '/login' }
+        };
     }
 })
 
