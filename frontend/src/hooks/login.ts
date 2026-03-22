@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import config from "../config";
+import { useNavigate } from "@tanstack/react-router";
 
 type LoginCretentials = {
     email: string,
@@ -7,6 +8,7 @@ type LoginCretentials = {
 }
 
 const useLogin = () => {
+    const navigate = useNavigate();
     const [isLoading, setLoading] = useState(false);
     
     const login = async (data: LoginCretentials) => {
@@ -23,7 +25,7 @@ const useLogin = () => {
 
             const response = await request.json();
 
-            console.log(response)
+            if(request.ok && response.message == "Logged in") navigate({to: '/'});
 
         } catch (error) {
             throw error;

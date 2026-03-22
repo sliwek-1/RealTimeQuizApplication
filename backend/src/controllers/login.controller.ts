@@ -17,7 +17,7 @@ export async function login(req: Request, res: Response) {
         if(!user) {
             return res.status(400).json({message: "Nie ma takiego użytkownika"});
         }
-        
+
         const isPasswordOk = await bcrypt.compare(password, user.dataValues.password);
 
         if(!isPasswordOk) {
@@ -45,7 +45,12 @@ export async function login(req: Request, res: Response) {
             sameSite: "none"
         });
 
-        res.status(200).json({message: "Logged in"});
+        res.status(200).json({message: "Logged in", user: {
+            name: user.dataValues.name,
+            surrname: user.dataValues.secondName,
+            email: user.dataValues.email,
+            id: user.dataValues.uniqueId
+        }});
 
     } catch (error) {
         throw error;
