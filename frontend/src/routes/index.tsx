@@ -10,7 +10,9 @@ export const Route = createFileRoute('/')({
             credentials: 'include'
         });
 
+
         const res = await req.json();
+        console.log(res.userData)
         if(!req.ok) return {redirect: '/login'};
     }
 })

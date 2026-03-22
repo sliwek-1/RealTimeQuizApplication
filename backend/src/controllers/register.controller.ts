@@ -9,7 +9,7 @@ export async function register(req: Request, res: Response) {
         const searchUser = await Users.findOne({
             where: { email }
         });
-
+        
         if(searchUser) {
             return res.status(400).json({message: "Konto o takim adresie email już istnieje"});
         }
