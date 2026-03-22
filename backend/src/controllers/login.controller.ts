@@ -17,7 +17,7 @@ export async function login(req: Request, res: Response) {
         if(!user) {
             return res.status(400).json({message: "Nie ma takiego użytkownika"});
         }
-        console.log(user)
+        
         const isPasswordOk = await bcrypt.compare(password, user.dataValues.password);
 
         if(!isPasswordOk) {
