@@ -2,6 +2,8 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from '../database/database.ts';
 import { v4 as uuidv4 } from "uuid";
 
+
+
 class Users extends Model {
     public id!: number;
     public uniqueId!: string;

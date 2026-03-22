@@ -1,7 +1,6 @@
 import express from "express";
-import type {Response, Request} from "express";
 import { register } from "../controllers/register.controller.ts";
-import { registerValidation } from "../middleware/registerValidation.ts";
+import { registerValidation } from "../middleware/register.middleware.ts";
 
 const registerRouter = express.Router();
 
