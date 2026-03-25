@@ -6,10 +6,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-
 import Card from 'react-bootstrap/Card';
-
-
+import { Link } from "@tanstack/react-router";
 
 function FrontPage() {
     return (
@@ -113,6 +111,9 @@ function FrontPage() {
                             </Card.Body>
                         </Card>
                     </Container>
+                                            
+                                                                    
+                    <Link to="/quizy" className="p-2 text-success">Więcej</Link>
             </Container>
         </>
     )
