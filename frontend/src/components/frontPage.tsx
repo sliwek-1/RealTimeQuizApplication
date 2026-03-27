@@ -20,7 +20,7 @@ function FrontPage() {
                         <Nav.Link href="/quiz">Lista quizów</Nav.Link>
                         <Nav.Link href="/quiz">Moje quizy</Nav.Link>
                         <Nav.Link href="/quiz">Kreator quizów</Nav.Link>
-                        <Nav.Link href="/quiz">Utwórz sesje</Nav.Link>
+                        <Nav.Link href="/session/create">Utwórz sesje</Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
                 </Container>

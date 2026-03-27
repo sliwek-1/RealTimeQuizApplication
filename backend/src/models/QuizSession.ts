@@ -3,7 +3,6 @@ import sequelize from "../database/database.ts";
 
 class QuizSession extends Model {
     public id!: number;
-    public sessionCode!: number;
     public title!: string;
     public description!: string;
     public status!: string;
@@ -22,10 +21,6 @@ QuizSession.init(
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
-        },
-        sessionCode: {
-            type: DataTypes.INTEGER,
-            allowNull: false
         },
         title: {
             type: DataTypes.STRING,
