@@ -41,10 +41,6 @@ QuizSessionConfig.init(
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        punishmentType: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         isAccountRequired: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -61,10 +57,6 @@ QuizSessionConfig.init(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        examEndCondition: {
-            type: DataTypes.STRING,
-            allowNull: false
-        }
     },
     {
         sequelize,

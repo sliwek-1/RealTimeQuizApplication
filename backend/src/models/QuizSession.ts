@@ -6,8 +6,6 @@ class QuizSession extends Model {
     public title!: string;
     public description!: string;
     public status!: string;
-    public startAt!: Date;
-    public endAt!: Date;
     public userId!: number;
     public quizId!: number;
     public sessionConfigId!: number;
@@ -33,14 +31,6 @@ QuizSession.init(
         status: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        startAt: {
-            type: DataTypes.DATE,
-            allowNull: true
-        },
-        endAt: {
-            type: DataTypes.DATE,
-            allowNull: true
         },
         userId: {
             type: DataTypes.INTEGER,
