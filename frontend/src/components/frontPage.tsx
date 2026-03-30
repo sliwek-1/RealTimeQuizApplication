@@ -8,7 +8,6 @@ import Form from 'react-bootstrap/Form';
 import {Row, Col, Badge} from "react-bootstrap";
 
 import Card from 'react-bootstrap/Card';
-import { Link } from "@tanstack/react-router";
 
 function FrontPage() {
     return (
@@ -23,7 +22,7 @@ function FrontPage() {
                             <Nav.Link href="/quiz" className="px-3">Lista quizów</Nav.Link>
                             <Nav.Link href="/quiz" className="px-3">Moje quizy</Nav.Link>
                             <Nav.Link href="/quiz" className="px-3">Kreator</Nav.Link>
-                            <Button variant="outline-primary" href="/session/create" className="ms-lg-3 btn-sm">
+                            <Button variant="outline-success success" href="/session/create" className="ms-lg-3 btn-sm">
                                 Utwórz sesję
                             </Button>
                         </Nav>
