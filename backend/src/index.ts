@@ -9,6 +9,7 @@ import cors from "cors";
 import loginRouter from "./routes/login.ts";
 import registerRouter from "./routes/register.ts";
 import whoamiRouter from "./routes/whoami.ts";
+import sessionRouter from "./routes/session.ts";
 import mongoose from "mongoose";
 import dotenv from "dotenv"
 import cookieParser from 'cookie-parser';
@@ -59,6 +60,7 @@ app.use(
 app.use('/api/', loginRouter);
 app.use('/api/', registerRouter);
 app.use('/api/', whoamiRouter);
+app.use('/api/', sessionRouter);
 
 app.get('/', (req: Request, res: Response) => {
     res.send("Hello typescript with express");

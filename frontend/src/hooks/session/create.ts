@@ -9,7 +9,7 @@ type Input = {
     isWarnings: boolean,
     answerTime: number,
     examTime: number,
-    passRate: number
+    passRate?: number
 }
 
 export function useCreateSession() {

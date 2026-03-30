@@ -24,11 +24,13 @@ export function SessionCreate() {
     const resolver = yupResolver(createSessionValidationSchema)
     const {register, handleSubmit, formState: {errors}} = useForm<Input>({ resolver });
     const [passThreshold, setPassThreshold] = useState<number>(0.5);
+    const {isLoading, createSession} = useCreateSession();
     const onSubmit: SubmitHandler<Input> = (data) => {
         let d: Input = {
             ...data,
             passRate: passThreshold,
         }   
+        createSession(d);
         console.log(d);
     };
 
@@ -125,7 +127,7 @@ export function SessionCreate() {
 
                                 <div className="d-grid gap-2">
                                     <Button variant="success" size="lg" type="submit" className="mt-2">
-                                        Stwórz sesję
+                                        {isLoading ? <p>Tworzenie sesji</p> : <p>Stwórz sesję</p>}
                                     </Button>
                                 </div>
                             </Form>
