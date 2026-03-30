@@ -82,6 +82,9 @@ export function SessionCreate() {
                                             <Form.Control name="examTime" type="number" />
                                         </Form.Group>
                                     </Col>
+                                    <p className="text-muted text-sm-start">
+                                        Jeśli ustawisz dwie wartość na raz to domyślnie brany jest pod uwage czas odp.
+                                    </p>
                                 </Row>
 
                                 <Form.Group className="mb-4" controlId="passThreshold">

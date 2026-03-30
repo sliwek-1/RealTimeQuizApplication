@@ -1,8 +1,11 @@
 import express from "express";
-import { session } from "../controllers/session.controller.ts";
+import { join } from "../controllers/session.controller.ts";
 
 const sessionRouter = express.Router();
 
-sessionRouter.post('/join', session);
+sessionRouter.post('/join', join);
+sessionRouter.post('/create', join);
+sessionRouter.post('/leave', join);
+sessionRouter.post('/get-data', join);
 
 export default sessionRouter;
