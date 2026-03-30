@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import config from "../../config";
 
 type Input = {
     title: string,
@@ -14,10 +15,17 @@ type Input = {
 export function useCreateSession() {
     const [isLoading, setLoading] = useState(false);
 
-    const createSession = (data: Input) => {
+    const createSession = async (data: Input) => {
         setLoading(true);
         try {
-            
+            let req = await fetch(`http://${config.host}:${config.port}/api/session/create`, {
+                method: 'post',
+                credentials: 'include',
+                body: JSON.stringify(data)
+            });
+
+            let res = await req.json();
+            console.log(res);
         } catch (error) {
             console.log(error);
         } finally {
