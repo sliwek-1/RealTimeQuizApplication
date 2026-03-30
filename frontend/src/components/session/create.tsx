@@ -87,7 +87,7 @@ export function SessionCreate() {
                                 <Form.Group className="mb-4" controlId="passThreshold">
                                     <div className="d-flex justify-content-between">
                                         <Form.Label className="small fw-semibold">Próg zdania</Form.Label>
-                                        <span className="badge bg-primary">{(passThreshold * 100).toFixed(0)}%</span>
+                                        <span className="badge bg-success">{(passThreshold * 100).toFixed(0)}%</span>
                                     </div>
                                     <Form.Range 
                                         name="passThreshold"
@@ -96,6 +96,7 @@ export function SessionCreate() {
                                         step={0.01}
                                         value={passThreshold}
                                         onChange={(e) => setPassThreshold(parseFloat(e.target.value))}
+                                        color="green"
                                     />
                                 </Form.Group>
 
