@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Card, CloseButton } from 'react-bootstrap';
 import { Editor } from '@tinymce/tinymce-react'; 
 import { useRef } from 'react';
 import { image_handler } from "../../../utils/imageHandler";
+import "../../../css/quiz/creator.css";
 
 export function AddQuestionTab() {
 
@@ -79,7 +80,7 @@ export function AddQuestionTab() {
                                                 {answers.map((answer, index) => (
                                                     <>
                                                         <Form.Label className="small fw-semibold">Odp. {index+1})</Form.Label>
-                                                        <div className="w-100 my-3 d-flex flex-row">
+                                                        <div className="w-100 my-3 d-flex flex-row answers">
                                                             <Form.Check type={choice == 'singel' ? 'radio' : 'checkbox'} name="choice" className="m-3" />
                                                             <Editor
                                                                 tinymceScriptSrc="/tinymce/tinymce.min.js"
@@ -106,6 +107,7 @@ export function AddQuestionTab() {
                                                                 images_upload_handler: (blobInfo: any, progress: any) => image_handler(blobInfo, progress)
                                                                 }}
                                                             />
+                                                            <CloseButton className="m-2"/>
                                                         </div>
                                                 </>
                                                 ))}
