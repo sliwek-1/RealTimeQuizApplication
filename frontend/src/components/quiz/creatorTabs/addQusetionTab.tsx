@@ -7,24 +7,32 @@ import "../../../css/quiz/creator.css";
 
 export function AddQuestionTab() {
 
-
     const [choice, setChoice] = useState('singel');
-    const editorRef1 = useRef<any>(null);
+    const question = useRef<any>(null);
 
     const [answers, setAnswers] = useState([
-        {id: crypto.randomUUID(), editor: ''},
-        {id: crypto.randomUUID(), editor: ''},
-        {id: crypto.randomUUID(), editor: ''},
-        {id: crypto.randomUUID(), editor: ''},
+        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie'},
+        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie'},
+        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie'},
+        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie'},
     ])
 
-    const log = () => {
-        if (editorRef1.current ) {
-            console.log(editorRef1.current?.getContent());
+    const addAnswer = () => {
+        setAnswers((e) => [...answers, {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie'}])
+    }
 
-        }
-    };
+    const removeAnswer = (id: any) => {
+        const newList = answers.filter((answer) => answer.id !== id);
+        console.log(id, newList)
+        setAnswers(newList);
+    }
 
+    const updateAnswer = (id: any, newEditor: any) => {
+        const updatedList = answers.map((answer, index) => (
+            answer.id === id ? {...answer, editor: newEditor} : answer
+        ));
+        setAnswers(updatedList)
+    }
     return (
         <>
         <Container fluid className="mb-5">
@@ -40,7 +48,7 @@ export function AddQuestionTab() {
                                                 <Editor
                                                     tinymceScriptSrc="/tinymce/tinymce.min.js"
                                                     licenseKey="gpl"
-                                                    onInit={ (_evt, editor) => editorRef1.current = editor }
+                                                    onInit={ (_evt, editor) => question.current = editor }
                                                     initialValue="<p>Zapisz tutaj treść pytania lub upuść obrazek</p>"
                                                     init={{
                                                     base_url: '/tinymce', 
@@ -79,13 +87,15 @@ export function AddQuestionTab() {
                                             <Form.Group className="d-flex justify-content-between flex-column">
                                                 {answers.map((answer, index) => (
                                                     <>
+                                                    <li key={index}>
                                                         <Form.Label className="small fw-semibold">Odp. {index+1})</Form.Label>
                                                         <div className="w-100 my-3 d-flex flex-row answers">
                                                             <Form.Check type={choice == 'singel' ? 'radio' : 'checkbox'} name="choice" className="m-3" />
                                                             <Editor
                                                                 tinymceScriptSrc="/tinymce/tinymce.min.js"
                                                                 licenseKey="gpl"
-                                                                onInit={ (_evt, editor) => editorRef1.current = editor }
+                                                                value={answer.editor}
+                                                                onEditorChange={(content) => updateAnswer(answer.id, content)}
                                                                 initialValue="<p>Zapisz odpowiedz na pytanie</p>"
                                                                 init={{
                                                                 base_url: '/tinymce', 
@@ -107,11 +117,15 @@ export function AddQuestionTab() {
                                                                 images_upload_handler: (blobInfo: any, progress: any) => image_handler(blobInfo, progress)
                                                                 }}
                                                             />
-                                                            <CloseButton className="m-2"/>
+                                                            <CloseButton className="m-2" onClick={(e) => removeAnswer(answer.id)}/>
                                                         </div>
+                                                    </li>
                                                 </>
                                                 ))}
                                             </Form.Group>
+                                            {answers.length == 10 ? "" :  
+                                                <Button variant="success" onClick={() => addAnswer()}>Dodaj Pytanie</Button>
+                                            }
                                         </Row>
 
                                         <Row>
