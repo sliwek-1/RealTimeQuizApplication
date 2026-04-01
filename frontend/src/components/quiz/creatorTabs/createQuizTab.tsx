@@ -11,8 +11,7 @@ export function CreateQuizTab() {
                     <Card className="border-0">
                         <Card.Body>
                             <Form>
-                                <Row>
-                                                
+                                <Row>        
                                     <Form.Group className="mb-3" controlId="title">
                                         <Form.Label className="small fw-semibold">Tytuł</Form.Label>
                                         <Form.Control type="text" placeholder="Wprowadź tytuł egzaminu" />
@@ -36,7 +35,7 @@ export function CreateQuizTab() {
                                 <Row>
                                     <Col lg={2}>
                                         <div className="mt-5">
-                                            <Button variant="success" size="lg" type="submit" className="mt-2">
+                                            <Button variant="success" size="lg" type="submit" className="mt-2 fs-6">
                                                 Zapisz
                                             </Button>
                                         </div>
