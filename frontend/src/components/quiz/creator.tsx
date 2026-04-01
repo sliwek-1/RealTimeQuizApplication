@@ -39,14 +39,14 @@ export function CreatorMenu() {
                             <Card.Title className="lg">Stwórz test</Card.Title>
                             <Card.Body className="w-100">
                                 <div className="tabs">
-                                    <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('createQuiz')}>Stwórz quiz</div>
-                                    <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('addQuestion')}>Dodaj pytania</div>
+                                    <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('createQuiz')}>Stwórz Quiz</div>
+                                    <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('addQuestion')}>Dodaj Pytania</div>
                                     <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('examRules')}>Zasady Egzaminu</div>
                                     <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('startScreen')}>Ekran Startowy</div>
                                     <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('summaryScreen')}>Ekran Podsumowania</div>
                                 </div>
                                 <div className="button-placeholder border-top">
-                                    <Button variant="success" className="w-100 p-2 mt-3">Aktywuj quiz</Button>
+                                    <Button variant="success" className="w-100 py-3 mt-3">Aktywuj Egzamin</Button>
                                 </div>
                             </Card.Body>
                         </Card>
