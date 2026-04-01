@@ -21,7 +21,7 @@ function FrontPage() {
                         <Nav className="ms-auto text-uppercase small fw-semibold">
                             <Nav.Link href="/quiz" className="px-3">Lista quizów</Nav.Link>
                             <Nav.Link href="/quiz" className="px-3">Moje quizy</Nav.Link>
-                            <Nav.Link href="/quiz" className="px-3">Kreator</Nav.Link>
+                            <Nav.Link href="/quiz/creator" className="px-3">Kreator</Nav.Link>
                             <Button variant="outline-success success" href="/session/create" className="ms-lg-3 btn-sm">
                                 Utwórz sesję
                             </Button>

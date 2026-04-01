@@ -11,7 +11,7 @@ return (
       <Container>
         {/* Logo z zielonym akcentem */}
         <Navbar.Brand href="/" className="fw-bold fs-4">
-          Quiz<span className="text-success">App</span>
+          quiz<span className="text-success">APP</span>
         </Navbar.Brand>
 
         {/* Przycisk hamburgera dla mobile */}

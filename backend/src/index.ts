@@ -13,7 +13,7 @@ import sessionRouter from "./routes/session.ts";
 import mongoose from "mongoose";
 import dotenv from "dotenv"
 import cookieParser from 'cookie-parser';
-
+import { image } from "./controllers/image.controller.ts";
 
 
 const app = express();
@@ -62,9 +62,13 @@ app.use('/api/', registerRouter);
 app.use('/api/', whoamiRouter);
 app.use('/api/', sessionRouter);
 
+
+
 app.get('/', (req: Request, res: Response) => {
     res.send("Hello typescript with express");
 });
+
+app.post('/api/image', image);
 
 app.listen(port, () => {
     console.log(`server is listen on port ${port}`);
