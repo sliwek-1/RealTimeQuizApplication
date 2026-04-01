@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { Row, Col, Container, Card, ListGroup, Button } from "react-bootstrap";
+
+import { CreateQuizTab } from "./creatorTabs/createQuizTab";
+import { AddQuestionTab } from "./creatorTabs/addQusetionTab";
+import { StartScreenTab } from "./creatorTabs/startScreenTab";
+import { ExamRulesTab } from "./creatorTabs/examRulesTab";
+import { SummaryScreenTab } from "./creatorTabs/summaryTab";
+
 import "../../css/quiz/creator.css";
-import type { useSearch } from "@tanstack/react-router";
 
 export function CreatorMenu() {
 
@@ -10,17 +16,17 @@ export function CreatorMenu() {
     const renderTabs = () => {
         switch(activeTab) {
             case 'createQuiz':
-                return <p>create quiz</p>
+                return <CreateQuizTab />
             case 'addQuestion':
-                return <p>add questtion</p>
+                return <AddQuestionTab />
             case 'examRules':
-                return <p>exam rules</p>
+                return <ExamRulesTab />
             case 'startScreen':
-                return <p>startowy ekran</p>
+                return <StartScreenTab />
             case 'summaryScreen':
-                return <p>ekran podsumowania</p>
+                return <SummaryScreenTab />
             default:
-                return <p>create quiz</p>
+                return <CreateQuizTab />
         }
     }
 
@@ -28,7 +34,7 @@ export function CreatorMenu() {
         <>
             <Container fluid>
                 <Row className="justify-content-between g-4 mt-5" lg={12}>
-                    <Col xs={12} md={4} lg={2} className="left-panel">
+                    <Col xs={12} md={4} lg={3} className="left-panel">
                         <Card className="border-0 w-100 d-flex justify-content-center align-items-center">
                             <Card.Title className="lg">Stwórz test</Card.Title>
                             <Card.Body className="w-100">
@@ -45,7 +51,7 @@ export function CreatorMenu() {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col xs={12} md={8} lg={10} className="main-panel">
+                    <Col xs={12} md={8} lg={9} className="main-panel">
                         <Card className="border-0 shadow-sm h-100">
                             {renderTabs()}
                         </Card>
