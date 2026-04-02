@@ -15,3 +15,12 @@
     outline-color: rgba(41, 82, 41, 0.5);
 }
 
+div.active {
+    color: rgb(9, 53, 9);
+    background: rgba(0, 255, 0, 0.1);
+    outline: 1px solid rgb(14, 71, 14);
+    outline-offset: -1px;
+    outline-color: rgba(41, 82, 41, 0.5);
+}
+
+

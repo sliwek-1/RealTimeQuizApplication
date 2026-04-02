@@ -12,7 +12,6 @@ import "../../css/quiz/creator.css";
 export function CreatorMenu() {
 
     const [activeTab, setTab] = useState("createQuiz");
-
     const renderTabs = () => {
         switch(activeTab) {
             case 'createQuiz':
@@ -39,11 +38,11 @@ export function CreatorMenu() {
                             <Card.Title className="lg">Stwórz test</Card.Title>
                             <Card.Body className="w-100">
                                 <div className="tabs">
-                                    <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('createQuiz')}>Stwórz Quiz</div>
-                                    <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('addQuestion')}>Dodaj Pytania</div>
-                                    <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('examRules')}>Zasady Egzaminu</div>
-                                    <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('startScreen')}>Ekran Startowy</div>
-                                    <div className="w-100 p-3 rounded shadow-sm" onClick={() => setTab('summaryScreen')}>Ekran Podsumowania</div>
+                                    <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'createQuiz' ? 'active' : ''}`} onClick={() => setTab('createQuiz')}>Stwórz Quiz</div>
+                                    <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'addQuestion' ? 'active' : ''}`} onClick={() => setTab('addQuestion')}>Dodaj Pytania</div>
+                                    <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'examRules' ? 'active' : ''}`} onClick={() => setTab('examRules')}>Zasady Egzaminu</div>
+                                    <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'startScreen' ? 'active' : ''}`} onClick={() => setTab('startScreen')}>Ekran Startowy</div>
+                                    <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'summaryScreen' ? 'active' : ''}`} onClick={() => setTab('summaryScreen')}>Ekran Podsumowania</div>
                                 </div>
                                 <div className="button-placeholder border-top">
                                     <Button variant="success" className="w-100 py-3 mt-3">Aktywuj Egzamin</Button>

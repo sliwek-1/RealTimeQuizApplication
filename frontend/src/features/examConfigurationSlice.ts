@@ -136,7 +136,7 @@ export const examConfigurationSlice = createSlice({
             state.startScreen.demandSurname = false;
         },
         setExamRules: (state, action: PayloadAction<ExamState>) => {
-
+            
         },
         removeExamRules: (state) => {
             
@@ -148,7 +148,7 @@ export const examConfigurationSlice = createSlice({
             
         },
         terminateExamState: (state) => {
-            
+
         }
     }
 })
