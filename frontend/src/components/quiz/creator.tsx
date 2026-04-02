@@ -52,7 +52,7 @@ export function CreatorMenu() {
                         </Card>
                     </Col>
                     <Col xs={12} md={8} lg={9} className="main-panel">
-                        <Card className="border-0 shadow-sm h-100">
+                        <Card className="border-0 shadow-lg p-3 h-100">
                             {renderTabs()}
                         </Card>
                     </Col>
