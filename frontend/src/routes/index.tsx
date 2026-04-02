@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import FrontPage from "../components/frontPage";
 import config from "../config";
 import { store } from "../store";
-import { removeUserFromStorage, addUserToStorage } from "../features/counter/userSlice";
+import { removeUserFromStorage, addUserToStorage } from "../features/userSlice";
 
 export const Route = createFileRoute('/')({
     component: Index,

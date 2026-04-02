@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import config from "../config";
 import { useNavigate } from "@tanstack/react-router";
 import { useDispatch } from "react-redux";
-import { addUserToStorage } from "../features/counter/userSlice";
+import { addUserToStorage } from "../features/userSlice";
 
 type LoginCretentials = {
     email: string,
