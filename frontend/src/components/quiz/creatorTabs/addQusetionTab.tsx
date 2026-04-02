@@ -124,9 +124,15 @@ export function AddQuestionTab() {
                                                 </>
                                                 ))}
                                             </Form.Group>
-                                            {answers.length == 10 ? "" :  
-                                                <Button variant="success" onClick={() => addAnswer()}>Dodaj Pytanie</Button>
-                                            }
+
+                                            <Row>
+                                                <Col>
+                                                    {answers.length == 10 ? "" :  
+                                                        <Button variant="success" className="w-25" onClick={() => addAnswer()}>Dodaj</Button>
+                                                    }
+                                                </Col>
+                                                <Col></Col>
+                                            </Row>
                                         </Row>
 
                                         <Row>
