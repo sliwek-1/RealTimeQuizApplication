@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
-import type { CreateExam } from "../../../types/creatorPanelTypes";
+import type { CreateExam, ExamState } from "../../../types/creatorPanelTypes";
 import type { SubmitHandler } from "react-hook-form";
 import { addExamToStorage } from "../../../features/examConfigurationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../store";
+import { persist } from "../../../utils/persistExamConfigurationData";
 
 export function CreateQuizTab() {
     const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export function CreateQuizTab() {
     const { register, handleSubmit, formState: {errors} } = useForm<CreateExam>({  });
     const onSubmit: SubmitHandler<CreateExam> = (data: CreateExam) => {
         dispatch(addExamToStorage(data))
-        
+        persist.saveConfigExam((data as ExamState))
     };  
 
     return (
