@@ -7,25 +7,56 @@ import { image_handler } from "../../../utils/imageHandler";
 
 export function SummaryScreenTab() {
 
-    const startScreenInfo = useRef<any>(null);
+    const happyEndingInfo = useRef<any>(null);
+    const badEndingInfo = useRef<any>(null);
 
     return (
         <>
         <Container fluid>
-            <h2 className="text-center mb-4 fw-bold">Konfiguracja Okna Startowego</h2>
+            <h2 className="text-center mb-4 fw-bold">Konfiguracja Ekranu Podsumowania</h2>
             <Row className="justify-content-left">
                 <Col xs={12} md={8} lg={6}>
                     <Card className="border-0">
                         <Card.Body>
                             <Form>
                                 <Row>        
-                                    <Form.Group className="mb-3" controlId="title">
-                                        <Form.Label className="small fw-semibold">Informacja wyświtlana na stronie startowej użytkowników</Form.Label>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="small fw-semibold">Informacja wyświtlana podczas pozytywnego wyniku</Form.Label>
                                         <Editor
                                             tinymceScriptSrc="/tinymce/tinymce.min.js"
                                             licenseKey="gpl"
-                                            onInit={ (_evt, editor) => startScreenInfo.current = editor }
-                                            initialValue="<p>Zapisz tutaj treść pytania lub upuść obrazek</p>"
+                                            onInit={ (_evt, editor) => happyEndingInfo.current = editor }
+                                            initialValue="<p>Gratylacje zaliczenia egzaminu.</p>"
+                                            init={{
+                                                base_url: '/tinymce', 
+                                                suffix: '.min',
+                                                promotion: false,     
+                                                branding: false,
+                                                height: 250,
+                                                width: 750,
+                                                menubar: false,
+                                                plugins: [
+                                                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+                                                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                                                    'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount',
+                                                ],
+                                                toolbar: 'undo redo | blocks | ' +
+                                                    'bold italic forecolor code | alignleft aligncenter ' +
+                                                    'alignright alignjustify | bullist numlist outdent indent | ' +
+                                                    'removeformat | help',
+                                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                                                images_upload_handler: (blobInfo: any, progress: any) => image_handler(blobInfo, progress)
+                                                }}
+                                        />
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="small fw-semibold">Informacja wyświtlana podczas negatywnego wyniku</Form.Label>
+                                        <Editor
+                                            tinymceScriptSrc="/tinymce/tinymce.min.js"
+                                            licenseKey="gpl"
+                                            onInit={ (_evt, editor) => badEndingInfo.current = editor }
+                                            initialValue="<p>Niestety nie udało ci się zaliczyć egzaminu. Powodzenia następnym razem</p>"
                                             init={{
                                                 base_url: '/tinymce', 
                                                 suffix: '.min',

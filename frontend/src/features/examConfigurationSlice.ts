@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { act } from 'react';
 
 type punishmentMethod = "Off" | "sendWarnings" | "sendWarningsAndKick";
 
@@ -33,28 +32,36 @@ interface ExamState {
     description: string,
     status: "public" | "private",
     questions: Questions[],
-    examRules: {
-        answerTime: number,
-        examTime: number,
-        punishmentMethod: punishmentMethod,
-        chances?: number,
-        isExamTime: boolean,
-        isAnswerTime: boolean
-    },
-    startScreen: {
-        content: String,
-        isAnonymous?: boolean,
-        demandName?: boolean,
-        demandSurname?: boolean,
-        demandEmail?: boolean
-    }, 
-    summaryScreen: {
-        content: string,
-        resultInPoints?: boolean,
-        resultInPercentage?: boolean,
-        informationAboutResult?: boolean,
-        avgGroupResult?: boolean
-    }
+    examRules: ExamRules,
+    startScreen: StartScreen, 
+    summaryScreen: SummaryScreen
+}
+
+interface StartScreen {
+    content: String,
+    isAnonymous?: boolean,
+    demandName?: boolean,
+    demandSurname?: boolean,
+    demandEmail?: boolean
+}
+
+interface ExamRules {
+    answerTime: number,
+    examTime: number,
+    punishmentMethod: punishmentMethod,
+    chances?: number,
+    isExamTime: boolean,
+    isAnswerTime: boolean,
+    passRate: number
+}
+
+interface SummaryScreen {
+    happyEnding: string,
+    badEnding: string,
+    resultInPoints?: boolean,
+    resultInPercentage?: boolean,
+    informationAboutResult?: boolean,
+    avgGroupResult?: boolean,
 }
 
 const initialState: ExamState = {
@@ -68,7 +75,8 @@ const initialState: ExamState = {
         punishmentMethod: "Off",
         chances: 5,
         isExamTime: true,
-        isAnswerTime: false
+        isAnswerTime: false,
+        passRate: 50
     },
     startScreen: {
         content: "",
@@ -78,7 +86,8 @@ const initialState: ExamState = {
         demandEmail: false
     }, 
     summaryScreen: {
-        content: "",
+        happyEnding: "",
+        badEnding: "",
         resultInPoints: true,
         resultInPercentage: false,
         informationAboutResult: true,
@@ -129,11 +138,11 @@ export const examConfigurationSlice = createSlice({
                 ));
             }
         },
-        setStartScreen: (state, action: PayloadAction<ExamState>) => {
-            state.startScreen.content = action.payload.startScreen.content;
-            state.startScreen.demandEmail = action.payload.startScreen.demandEmail;
-            state.startScreen.demandName = action.payload.startScreen.demandName;
-            state.startScreen.demandSurname = action.payload.startScreen.demandSurname;
+        setStartScreen: (state, action: PayloadAction<StartScreen>) => {
+            state.startScreen.content = action.payload.content;
+            state.startScreen.demandEmail = action.payload.demandEmail;
+            state.startScreen.demandName = action.payload.demandName;
+            state.startScreen.demandSurname = action.payload.demandSurname;
         },
         removeStartScreen: (state) => {
             state.startScreen.content = "";
@@ -141,13 +150,13 @@ export const examConfigurationSlice = createSlice({
             state.startScreen.demandName = true;
             state.startScreen.demandSurname = false;
         },
-        setExamRules: (state, action: PayloadAction<ExamState>) => {
-            state.examRules.answerTime = action.payload.examRules.answerTime;
-            state.examRules.examTime = action.payload.examRules.examTime;
-            state.examRules.punishmentMethod = action.payload.examRules.punishmentMethod;
-            state.examRules.chances = action.payload.examRules.chances;
-            state.examRules.isExamTime = action.payload.examRules.isExamTime;
-            state.examRules.isAnswerTime = action.payload.examRules.isAnswerTime;
+        setExamRules: (state, action: PayloadAction<ExamRules>) => {
+            state.examRules.answerTime = action.payload.answerTime;
+            state.examRules.examTime = action.payload.examTime;
+            state.examRules.punishmentMethod = action.payload.punishmentMethod;
+            state.examRules.chances = action.payload.chances;
+            state.examRules.isExamTime = action.payload.isExamTime;
+            state.examRules.isAnswerTime = action.payload.isAnswerTime;
         },
         removeExamRules: (state) => {
             state.examRules.answerTime = 30;
@@ -157,15 +166,17 @@ export const examConfigurationSlice = createSlice({
             state.examRules.isExamTime = true;
             state.examRules.isAnswerTime = false;
         },
-        setSummaryScreen: (state, action: PayloadAction<ExamState>) => {
-            state.summaryScreen.content = action.payload.summaryScreen.content;
-            state.summaryScreen.resultInPoints = action.payload.summaryScreen.resultInPoints;
-            state.summaryScreen.resultInPercentage = action.payload.summaryScreen.resultInPercentage;
-            state.summaryScreen.avgGroupResult = action.payload.summaryScreen.avgGroupResult;
-            state.summaryScreen.informationAboutResult = action.payload.summaryScreen.informationAboutResult;
+        setSummaryScreen: (state, action: PayloadAction<SummaryScreen>) => {
+            state.summaryScreen.happyEnding = action.payload.happyEnding;
+            state.summaryScreen.badEnding = action.payload.badEnding;
+            state.summaryScreen.resultInPoints = action.payload.resultInPoints;
+            state.summaryScreen.resultInPercentage = action.payload.resultInPercentage;
+            state.summaryScreen.avgGroupResult = action.payload.avgGroupResult;
+            state.summaryScreen.informationAboutResult = action.payload.informationAboutResult;
         },
         removeSummaryScreen: (state) => {
-            state.summaryScreen.content = "";
+            state.summaryScreen.happyEnding = "";
+            state.summaryScreen.badEnding = "";
             state.summaryScreen.resultInPoints = true;
             state.summaryScreen.resultInPercentage = false;
             state.summaryScreen.avgGroupResult = false;
@@ -177,6 +188,8 @@ export const examConfigurationSlice = createSlice({
     }
 })
 
-export const {addExamToStorage, removeExamFromStorage} = examConfigurationSlice.actions;
+export const { addExamToStorage, removeExamFromStorage, addQuestionToStorage, removeQuestionFromStorage, 
+    cleanQuestionStorage, addAnswerToStorage, removeAnswerFromStorage, setExamRules, setStartScreen, 
+    setSummaryScreen, removeExamRules, removeStartScreen, removeSummaryScreen } = examConfigurationSlice.actions;
 
 export default examConfigurationSlice.reducer;

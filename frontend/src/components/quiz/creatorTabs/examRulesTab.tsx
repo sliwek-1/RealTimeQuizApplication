@@ -76,6 +76,14 @@ export function ExamRulesTab() {
                                                 Wykroczenia są zliczane na podstawie wyjścia użytkownika z karty egzaminu lub zminimalizowanie przeglądarki.
                                             </Form.Label>
                                         </Form.Group>
+                                        <div className='d-flex justify-content-between align-items-center w-75'>
+                                                <Col>
+                                                    <Form.Label>Próg zaliczenia egzaminu (%)</Form.Label>
+                                                </Col>
+                                                <Col>
+                                                    <Form.Control type="number" className='w-35' defaultValue={50} min={0} max={100}/>
+                                                </Col>
+                                        </div>
                                     </Row>
 
                                     <Row>
