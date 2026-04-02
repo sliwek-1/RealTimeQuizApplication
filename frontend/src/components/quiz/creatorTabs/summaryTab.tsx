@@ -3,6 +3,8 @@ import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Editor } from '@tinymce/tinymce-react'; 
 import { useRef } from 'react';
 import { image_handler } from "../../../utils/imageHandler";
+
+
 export function SummaryScreenTab() {
 
     const startScreenInfo = useRef<any>(null);
@@ -55,7 +57,7 @@ export function SummaryScreenTab() {
                                                         <Form.Label>Wynik w (ptk.)</Form.Label>
                                                     </Col>
                                                     <Col>
-                                                        <Form.Check type="radio" name="resultType" defaultChecked/>
+                                                        <Form.Check type="checkbox" defaultChecked/>
                                                     </Col>
                                                 </Row>
                                                 <Row>
@@ -63,7 +65,7 @@ export function SummaryScreenTab() {
                                                         <Form.Label>Wynik w (%.)</Form.Label>
                                                     </Col>
                                                     <Col>
-                                                        <Form.Check type="radio" name="resultType" defaultChecked/>
+                                                        <Form.Check type="checkbox"/>
                                                     </Col>
                                                 </Row>
                                                 <Row>
@@ -71,7 +73,7 @@ export function SummaryScreenTab() {
                                                         <Form.Label>Informacja o zdaniu egzaminu</Form.Label>
                                                     </Col>
                                                     <Col>
-                                                        <Form.Check type="checkbox" name="userData"/>
+                                                        <Form.Check type="checkbox" name="userData" defaultChecked/>
                                                     </Col>
                                                 </Row>
                                                 <Row>
