@@ -5,21 +5,24 @@ import { Editor } from '@tinymce/tinymce-react';
 import { useRef } from 'react';
 import { image_handler } from "../../../utils/imageHandler";
 import "../../../css/quiz/creator.css";
+import type { Questions } from "../../../types/creatorPanelTypes";
+import type { SubmitHandler } from "react-hook-form";
 
 export function AddQuestionTab() {
-
-    const [choice, setChoice] = useState('singel');
-    const question = useRef<any>(null);
+    const { register, handleSubmit, formState: {errors}, setValue } = useForm<Questions>({  });
+ 
+    const [choice, setChoice] = useState('singleChoice');
+    const [questionContent, setQuestion] = useState("")
 
     const [answers, setAnswers] = useState([
-        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie'},
-        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie'},
-        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie'},
-        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie'},
+        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie', isCorrect: false},
+        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie', isCorrect: false},
+        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie', isCorrect: false},
+        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie', isCorrect: false},
     ])
 
     const addAnswer = () => {
-        setAnswers((e) => [...answers, {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie'}])
+        setAnswers((e) => [...answers, {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie', isCorrect: false}])
     }
 
     const removeAnswer = (id: any) => {
@@ -34,6 +37,32 @@ export function AddQuestionTab() {
         ));
         setAnswers(updatedList)
     }
+
+    const updateIsCorrect = (id: any) => {
+        if(choice == 'singleChoice') {
+            setAnswers((prev) => (
+                prev.map((answer) => (
+                    answer.id !== id ? {...answer, isCorrect: false} : answer
+                ))
+            ));
+        }
+
+        setAnswers((prev) => (
+            prev.map((answer) => (
+                answer.id === id ? {...answer, isCorrect: !answer.isCorrect} : answer
+            ))
+        ));
+    }
+
+    const onSubmit: SubmitHandler<Questions> = (data) => {
+        let newData = {
+            id: crypto.randomUUID(),
+            questionContent,
+            questionWeight: data.questionWeight,
+            answers: [...answers],
+        }
+        console.log(newData)
+    }; 
     
     return (
         <>
@@ -43,14 +72,15 @@ export function AddQuestionTab() {
                         <Col xs={12} md={8} lg={6}>
                             <Card className="border-0">
                                 <Card.Body>
-                                    <Form>
+                                    <Form onSubmit={handleSubmit(onSubmit)}>
                                         <Row>        
                                             <Form.Group className="mb-3" controlId="title">
                                                 <Form.Label className="small fw-semibold">Zapisz Pytanie</Form.Label>
                                                 <Editor
                                                     tinymceScriptSrc="/tinymce/tinymce.min.js"
                                                     licenseKey="gpl"
-                                                    onInit={ (_evt, editor) => question.current = editor }
+                                                    value={questionContent}
+                                                    onEditorChange={(content) => setQuestion(content)}
                                                     initialValue="<p>Zapisz tutaj treść pytania lub upuść obrazek</p>"
                                                     init={{
                                                     base_url: '/tinymce', 
@@ -78,8 +108,8 @@ export function AddQuestionTab() {
                                             <Form.Group className="mb-4" controlId="visibility">
                                                 <Form.Label className="small fw-semibold">Typ pytania</Form.Label>
                                                 <Form.Select onChange={(e) => setChoice(e.currentTarget.value)}>
-                                                    <option value="singel">Jednokrotnego Wyboru</option>
-                                                    <option value="multi">Wielokrotnego Wyboru</option>
+                                                    <option value="singleChoice">Jednokrotnego Wyboru</option>
+                                                    <option value="multiChoice">Wielokrotnego Wyboru</option>
                                                 </Form.Select>
                                             </Form.Group>
                                         </Row>
@@ -92,7 +122,7 @@ export function AddQuestionTab() {
                                                     <li key={index}>
                                                         <Form.Label className="small fw-semibold">Odp. {index+1})</Form.Label>
                                                         <div className="w-100 my-3 d-flex flex-row answers">
-                                                            <Form.Check type={choice == 'singel' ? 'radio' : 'checkbox'} name="choice" className="m-3" />
+                                                            <Form.Check type={choice == 'singleChoice' ? 'radio' : 'checkbox'} checked={answer.isCorrect} onChange={(e) => updateIsCorrect(answer.id)}  name="choice" className="m-3" />
                                                             <Editor
                                                                 tinymceScriptSrc="/tinymce/tinymce.min.js"
                                                                 licenseKey="gpl"
@@ -140,7 +170,7 @@ export function AddQuestionTab() {
 
                                             <Form.Group>
                                                 <Form.Label className="small fw-semibold">Podaj punktacje pytania</Form.Label>
-                                                <Form.Control type="number" defaultValue={1}/>
+                                                <Form.Control type="number" defaultValue={1} {...register('questionWeight')}/>
                                             </Form.Group>
                                         </Row>
         
