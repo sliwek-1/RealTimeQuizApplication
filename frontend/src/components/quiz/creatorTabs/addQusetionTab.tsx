@@ -25,20 +25,20 @@ export function AddQuestionTab() {
         setAnswers((e) => [...answers, {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie', isCorrect: false}])
     }
 
-    const removeAnswer = (id: any) => {
+    const removeAnswer = (id: string) => {
         const newList = answers.filter((answer) => answer.id !== id);
         console.log(id, newList)
         setAnswers(newList);
     }
 
-    const updateAnswer = (id: any, newEditor: any) => {
-        const updatedList = answers.map((answer, index) => (
+    const updateAnswer = (id: string, newEditor: string) => {
+        const updatedList = answers.map((answer) => (
             answer.id === id ? {...answer, editor: newEditor} : answer
         ));
         setAnswers(updatedList)
     }
 
-    const updateIsCorrect = (id: any) => {
+    const updateIsCorrect = (id: string) => {
         if(choice == 'singleChoice') {
             setAnswers((prev) => (
                 prev.map((answer) => (
@@ -52,6 +52,7 @@ export function AddQuestionTab() {
                 answer.id === id ? {...answer, isCorrect: !answer.isCorrect} : answer
             ))
         ));
+
     }
 
     const onSubmit: SubmitHandler<Questions> = (data) => {
@@ -167,7 +168,6 @@ export function AddQuestionTab() {
                                         </Row>
 
                                         <Row>
-
                                             <Form.Group>
                                                 <Form.Label className="small fw-semibold">Podaj punktacje pytania</Form.Label>
                                                 <Form.Control type="number" defaultValue={1} {...register('questionWeight')}/>

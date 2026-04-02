@@ -120,9 +120,7 @@ export const examConfigurationSlice = createSlice({
             state.summaryScreen.avgGroupResult = false;
             state.summaryScreen.informationAboutResult = true;
         },
-        terminateExamState: (state) => {
-
-        }
+        terminateExamState: () => initialState
     }
 })
 

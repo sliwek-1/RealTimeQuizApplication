@@ -1,4 +1,3 @@
-import { preconnect } from "react-dom";
 import type { ExamState } from "../types/creatorPanelTypes";
 
 const EXAM_CONFIG_STORAGE_KEY = "examConfig";
