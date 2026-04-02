@@ -1,68 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-
-type punishmentMethod = "Off" | "sendWarnings" | "sendWarningsAndKick";
-
-interface Answers {
-    id: string,
-    content: string,
-    isCorrect: Boolean,
-}
-
-interface AddAnswerToStorage {
-    questionId: string,
-    answer: Answers
-}
-
-interface RemoveAnswerFromStorage {
-    questionId: string,
-    answerId: string,
-}
-
-interface Questions {
-    id: string
-    question: string,
-    type: "multiChoice" | "singleChoice",
-    answers: Answers[],
-    questionWeight: number,
-}
-
-interface ExamState {
-    title: string,
-    description: string,
-    status: "public" | "private",
-    questions: Questions[],
-    examRules: ExamRules,
-    startScreen: StartScreen, 
-    summaryScreen: SummaryScreen
-}
-
-interface StartScreen {
-    content: String,
-    isAnonymous?: boolean,
-    demandName?: boolean,
-    demandSurname?: boolean,
-    demandEmail?: boolean
-}
-
-interface ExamRules {
-    answerTime: number,
-    examTime: number,
-    punishmentMethod: punishmentMethod,
-    chances?: number,
-    isExamTime: boolean,
-    isAnswerTime: boolean,
-    passRate: number
-}
-
-interface SummaryScreen {
-    happyEnding: string,
-    badEnding: string,
-    resultInPoints?: boolean,
-    resultInPercentage?: boolean,
-    informationAboutResult?: boolean,
-    avgGroupResult?: boolean,
-}
+import type { Questions, ExamRules, ExamState, SummaryScreen, AddAnswerToStorage, RemoveAnswerFromStorage, StartScreen } from './types';
 
 const initialState: ExamState = {
     title: "",
