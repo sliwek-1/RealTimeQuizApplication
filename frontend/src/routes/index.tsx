@@ -11,7 +11,7 @@ export const Route = createFileRoute('/')({
             method: 'post',
             credentials: 'include'
         });
-
+        
         const res = await req.json();
         console.log(res.userData)
 

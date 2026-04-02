@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Questions, ExamRules, ExamState, SummaryScreen, AddAnswerToStorage, RemoveAnswerFromStorage, StartScreen } from './types';
+import type { Questions, ExamRules, ExamState, SummaryScreen, AddAnswerToStorage, RemoveAnswerFromStorage, StartScreen, CreateExam } from '../types/creatorPanelTypes';
 
 const initialState: ExamState = {
     title: "",
@@ -37,7 +37,7 @@ export const examConfigurationSlice = createSlice({
     name: 'exam',
     initialState,
     reducers: {
-        addExamToStorage: (state, action: PayloadAction<ExamState>) => {
+        addExamToStorage: (state, action: PayloadAction<CreateExam>) => {
             state.title = action.payload.title;
             state.description = action.payload.description;
             state.status = action.payload.status;

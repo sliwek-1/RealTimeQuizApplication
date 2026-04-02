@@ -51,6 +51,12 @@ export interface StartScreen {
     demandEmail?: boolean
 }
 
+export interface CreateExam {
+    title: string,
+    description: string,
+    status: "public" | "private",
+}
+
 export interface ExamState {
     title: string,
     description: string,
@@ -60,4 +66,3 @@ export interface ExamState {
     startScreen: StartScreen, 
     summaryScreen: SummaryScreen
 }
-
