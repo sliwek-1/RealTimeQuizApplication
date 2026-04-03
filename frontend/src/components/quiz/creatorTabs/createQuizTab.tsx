@@ -36,8 +36,7 @@ export function CreateQuizTab() {
                     
                                         <Form.Group className="mb-4">
                                             <Form.Label className="small fw-semibold">Widoczność sesji</Form.Label>
-                                            <Form.Select  {...register('status')}>
-                                                <option value="">Wybierz jedną z opcji</option>
+                                            <Form.Select  {...register('status')} defaultValue={"private"}>
                                                 <option value="public">Publiczna</option>
                                                 <option value="private">Prywatna</option>
                                             </Form.Select>

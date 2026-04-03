@@ -8,12 +8,10 @@ const initialState: ExamState = {
     status: "private",
     questions: [],
     examRules: {
-        answerTime: 30,
+        examTimeBy: "exam",
         examTime: 60,
         punishmentMethod: "Off",
         chances: 5,
-        isExamTime: true,
-        isAnswerTime: false,
         passRate: 50
     },
     startScreen: {
@@ -89,20 +87,16 @@ export const examConfigurationSlice = createSlice({
             state.startScreen.demandSurname = false;
         },
         setExamRules: (state, action: PayloadAction<ExamRules>) => {
-            state.examRules.answerTime = action.payload.answerTime;
             state.examRules.examTime = action.payload.examTime;
             state.examRules.punishmentMethod = action.payload.punishmentMethod;
             state.examRules.chances = action.payload.chances;
-            state.examRules.isExamTime = action.payload.isExamTime;
-            state.examRules.isAnswerTime = action.payload.isAnswerTime;
+            state.examRules.examTime = action.payload.examTime;
         },
         removeExamRules: (state) => {
-            state.examRules.answerTime = 30;
-            state.examRules.examTime = 60;
             state.examRules.punishmentMethod = "Off";
             state.examRules.chances = 5;
-            state.examRules.isExamTime = true;
-            state.examRules.isAnswerTime = false;
+            state.examRules.examTime = 60;
+            state.examRules.examTimeBy = "exam";
         },
         setSummaryScreen: (state, action: PayloadAction<SummaryScreen>) => {
             state.summaryScreen.happyEnding = action.payload.happyEnding;

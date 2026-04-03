@@ -17,33 +17,21 @@ export function ExamRulesTab() {
     return (
         <>
             <Container fluid>
-                <Row className="justify-content-left">
+                <Row className="justify-content-left border rounded p-5">
                     <Col xs={12} md={8} lg={6}>
                         <Card className="border-0">
                             <Card.Body>
                                 <Form onSubmit={handleSubmit(onSubmit)}>
                                     <Row>        
-                                        <Form.Group className="mb-3" controlId="title">
-                                            <Form.Label className="small fw-semibold">Czas na Odp. (s)</Form.Label>
-                                            <div className='d-flex justify-content-between align-items-center w-25'>
-                                                <Form.Check type="radio" className='m-2' name='czas' onChange={() => setExamTime('byAnswer')} />
-                                                {examTime == 'byAnswer' ?
-                                                    <Form.Control type="number" defaultValue={30} {...register('isAnswerTime')} />
-                                                : 
-                                                    <Form.Control type="number" defaultValue={30}  disabled/>
-                                                }
-                                            </div>
-                                        </Form.Group>
-                                        <Form.Group className="mb-3" controlId="title">
-                                            <Form.Label className="small fw-semibold">Czas na Egzamin. (min)</Form.Label>
-                                            <div className='d-flex justify-content-between align-items-center w-25'>
-                                                <Form.Check type="radio" className='m-2' name='czas' onChange={() => setExamTime('byExam')} defaultChecked/>
-                                                {examTime == 'byExam' ?
-                                                    <Form.Control type="number" defaultValue={60}  {...register('isExamTime')} />
-                                                : 
-                                                    <Form.Control type="number" defaultValue={60}  disabled/>
-                                                }
-                                            </div>
+                                        <Form.Group className="mb-4">
+                                            <Form.Label className="small fw-semibold">Czas na wykonanie egzaminu</Form.Label>
+                                            <Form.Select  {...register('examTimeBy')} defaultValue={"exam"}>
+                                                <option value="exam">Czas na cały egzamin (m)</option>
+                                                <option value="answer">Czas na jedno pytanie (s)</option>
+                                            </Form.Select>
+
+                                            <Form.Label className='small fw-semibold mt-4'>Podaj czas</Form.Label>
+                                            <Form.Control type='number' defaultValue={60}  {...register('examTime')}/> 
                                         </Form.Group>
                                         <Form.Group className="mb-4">
                                             <Form.Label className="small fw-semibold">System wykrywania wykroczeń</Form.Label>
@@ -59,7 +47,7 @@ export function ExamRulesTab() {
                                                     <Form.Label>Liczba wykroczeni przed wyrzuceniem</Form.Label>
                                                 </Col>
                                                 <Col>
-                                                    <Form.Control type="number" className='w-25' {...register('chances')} defaultValue={5} />
+                                                    <Form.Control type="number" className='w-100' {...register('chances')} defaultValue={5} />
                                                 </Col>
                                             </div>
                                             <Form.Label className='text-muted fs-7'> 

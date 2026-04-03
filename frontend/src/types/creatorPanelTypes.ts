@@ -18,12 +18,10 @@ export interface RemoveAnswerFromStorage {
 }
 
 export interface ExamRules {
-    answerTime: number,
-    examTime: number,
+    examTimeBy: string,
     punishmentMethod: PunishmentMethod,
     chances?: number,
-    isExamTime: boolean,
-    isAnswerTime: boolean,
+    examTime: number,
     passRate: number
 }
 
