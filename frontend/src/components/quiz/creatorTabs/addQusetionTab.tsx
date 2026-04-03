@@ -6,9 +6,13 @@ import { image_handler } from "../../../utils/imageHandler";
 import "../../../css/quiz/creator.css";
 import type { Questions, Answers, Choice } from "../../../types/creatorPanelTypes";
 import type { SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { addQuestionValidationSchema } from "../../../formsValidationSchema/addQuestionSchema";
+
 
 export function AddQuestionTab() {
-    const { register, handleSubmit, formState: {errors}, setValue } = useForm<Questions>({  });
+    const resolver = yupResolver(addQuestionValidationSchema)
+    const { register, handleSubmit, formState: {errors}, setValue } = useForm<Questions>({ resolver });
  
     const [choice, setChoice] = useState('singleChoice');
     const [questionContent, setQuestion] = useState("")
@@ -68,10 +72,7 @@ export function AddQuestionTab() {
     }, [choice])
 
     const onSubmit: SubmitHandler<Questions> = (data: Questions) => {
-        let newData = {
-            ...data,
-            id: crypto.randomUUID(),
-        }
+        let newData = {...data, id: crypto.randomUUID()}
         console.log(newData)
     }; 
     
@@ -114,6 +115,7 @@ export function AddQuestionTab() {
                                                     images_upload_handler: (blobInfo: any, progress: any) => image_handler(blobInfo, progress)
                                                     }}
                                                 />
+                                                {errors.question ? <Form.Label className="fs-6 text-muted-danger">{errors.question.message}</Form.Label> : null}
                                             </Form.Group>
                                                 
                                             <Form.Group className="mb-4" controlId="visibility">
@@ -122,6 +124,7 @@ export function AddQuestionTab() {
                                                     <option value="singleChoice">Jednokrotnego Wyboru</option>
                                                     <option value="multiChoice">Wielokrotnego Wyboru</option>
                                                 </Form.Select>
+                                                {errors.type ? <Form.Label className="fs-6 text-muted-danger">{errors.type.message}</Form.Label> : null}
                                             </Form.Group>
                                         </Row>
 
@@ -165,6 +168,7 @@ export function AddQuestionTab() {
                                                     </li>
                                                 </>
                                                 ))}
+                                                {errors.answers ? <Form.Label className="fs-6 text-muted-danger">{errors.answers.message}</Form.Label> : null}
                                             </Form.Group>
 
                                             <Row>
@@ -181,6 +185,7 @@ export function AddQuestionTab() {
                                             <Form.Group>
                                                 <Form.Label className="small fw-semibold">Podaj punktacje pytania</Form.Label>
                                                 <Form.Control type="number" defaultValue={1} {...register('questionWeight')}/>
+                                                 {errors.questionWeight ? <Form.Label className="fs-6 text-muted-danger">{errors.questionWeight.message}</Form.Label> : null}
                                             </Form.Group>
                                         </Row>
         
