@@ -1,9 +1,10 @@
 export type PunishmentMethod = "Off" | "sendWarnings" | "sendWarningsAndKick";
+export type Choice = "singleChoice" | "multiChoice";
 
 export interface Answers {
     id: string,
     content: string,
-    isCorrect: Boolean,
+    isCorrect: boolean,
 }
 
 export interface AddAnswerToStorage {
@@ -38,7 +39,7 @@ export interface SummaryScreen {
 export interface Questions {
     id: string
     question: string,
-    type: "multiChoice" | "singleChoice",
+    type: Choice,
     answers: Answers[],
     questionWeight: number,
 }

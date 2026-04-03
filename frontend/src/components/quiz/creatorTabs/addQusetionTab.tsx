@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form"
 import { Form, Button, Container, Row, Col, Card, CloseButton } from 'react-bootstrap';
 import { Editor } from '@tinymce/tinymce-react'; 
-import { useRef } from 'react';
 import { image_handler } from "../../../utils/imageHandler";
 import "../../../css/quiz/creator.css";
-import type { Questions } from "../../../types/creatorPanelTypes";
+import type { Questions, Answers, Choice } from "../../../types/creatorPanelTypes";
 import type { SubmitHandler } from "react-hook-form";
 
 export function AddQuestionTab() {
@@ -14,15 +13,15 @@ export function AddQuestionTab() {
     const [choice, setChoice] = useState('singleChoice');
     const [questionContent, setQuestion] = useState("")
 
-    const [answers, setAnswers] = useState([
-        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie', isCorrect: false},
-        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie', isCorrect: false},
-        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie', isCorrect: false},
-        {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie', isCorrect: false},
+    const [answers, setAnswers] = useState<Answers[]>([
+        {id: crypto.randomUUID(), content: 'Zapisz odpowiedz na pytanie', isCorrect: false},
+        {id: crypto.randomUUID(), content: 'Zapisz odpowiedz na pytanie', isCorrect: false},
+        {id: crypto.randomUUID(), content: 'Zapisz odpowiedz na pytanie', isCorrect: false},
+        {id: crypto.randomUUID(), content: 'Zapisz odpowiedz na pytanie', isCorrect: false},
     ])
 
     const addAnswer = () => {
-        setAnswers((e) => [...answers, {id: crypto.randomUUID(), editor: 'Zapisz odpowiedz na pytanie', isCorrect: false}])
+        setAnswers((e) => [...answers, {id: crypto.randomUUID(), content: 'Zapisz odpowiedz na pytanie', isCorrect: false}]);
     }
 
     const removeAnswer = (id: string) => {
@@ -33,7 +32,7 @@ export function AddQuestionTab() {
 
     const updateAnswer = (id: string, newEditor: string) => {
         const updatedList = answers.map((answer) => (
-            answer.id === id ? {...answer, editor: newEditor} : answer
+            answer.id === id ? {...answer, content: newEditor} : answer
         ));
         setAnswers(updatedList)
     }
@@ -52,15 +51,26 @@ export function AddQuestionTab() {
                 answer.id === id ? {...answer, isCorrect: !answer.isCorrect} : answer
             ))
         ));
-
     }
 
-    const onSubmit: SubmitHandler<Questions> = (data) => {
+    // updates field values in react hook form state
+
+    useEffect(() => {
+        setValue('answers', answers);
+    }, [answers]);
+
+    useEffect(() => {
+        setValue('question', questionContent);
+    }, [questionContent])
+
+    useEffect(() => {
+        setValue('type', (choice as Choice));
+    }, [choice])
+
+    const onSubmit: SubmitHandler<Questions> = (data: Questions) => {
         let newData = {
+            ...data,
             id: crypto.randomUUID(),
-            questionContent,
-            questionWeight: data.questionWeight,
-            answers: [...answers],
         }
         console.log(newData)
     }; 
@@ -127,7 +137,7 @@ export function AddQuestionTab() {
                                                             <Editor
                                                                 tinymceScriptSrc="/tinymce/tinymce.min.js"
                                                                 licenseKey="gpl"
-                                                                value={answer.editor}
+                                                                value={answer.content}
                                                                 onEditorChange={(content) => updateAnswer(answer.id, content)}
                                                                 initialValue="<p>Zapisz odpowiedz na pytanie</p>"
                                                                 init={{
