@@ -13,7 +13,6 @@ export function StartScreenTab() {
     return (
         <>
         <Container fluid>
-            <h2 className="text-center mb-4 fw-bold">Konfiguracja Okna Startowego</h2>
             <Row className="justify-content-left">
                 <Col xs={12} md={8} lg={6}>
                     <Card className="border-0">

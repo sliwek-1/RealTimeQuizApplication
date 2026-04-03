@@ -82,7 +82,6 @@ export function AddQuestionTab() {
     return (
         <>
         <Container fluid className="mb-5">
-                    <h2 className="text-center mb-4 fw-bold">Dodaj pytanie</h2>
                     <Row className="justify-content-left">
                         <Col xs={12} md={8} lg={6}>
                             <Card className="border-0">
@@ -128,6 +127,14 @@ export function AddQuestionTab() {
                                                     <option value="multiChoice">Wielokrotnego Wyboru</option>
                                                 </Form.Select>
                                                 {errors.type ? <Form.Label className="fs-6 text-danger">{errors.type.message}</Form.Label> : null}
+                                            </Form.Group>
+                                        </Row>
+
+                                        <Row className="mb-5">
+                                            <Form.Group>
+                                                <Form.Label className="small fw-semibold md-2">Podaj punktacje pytania</Form.Label>
+                                                <Form.Control type="number" defaultValue={1} {...register('questionWeight')}/>
+                                                {errors.questionWeight ? <Form.Label className="fs-6 text-danger">{errors.questionWeight.message}</Form.Label> : null}
                                             </Form.Group>
                                         </Row>
 
@@ -179,19 +186,11 @@ export function AddQuestionTab() {
                                             <Row>
                                                 <Col>
                                                     {answers.length == 10 ? "" :  
-                                                        <Button variant="success" className="w-25" onClick={() => addAnswer()}>Dodaj</Button>
+                                                        <Button variant="success" className="w-50" onClick={() => addAnswer()}>Dodaj</Button>
                                                     }
                                                 </Col>
                                                 <Col></Col>
                                             </Row>
-                                        </Row>
-
-                                        <Row>
-                                            <Form.Group>
-                                                <Form.Label className="small fw-semibold">Podaj punktacje pytania</Form.Label>
-                                                <Form.Control type="number" defaultValue={1} {...register('questionWeight')}/>
-                                                 {errors.questionWeight ? <Form.Label className="fs-6 text-danger">{errors.questionWeight.message}</Form.Label> : null}
-                                            </Form.Group>
                                         </Row>
         
                                         <Row>

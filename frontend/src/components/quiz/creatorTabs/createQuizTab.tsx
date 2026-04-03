@@ -18,8 +18,7 @@ export function CreateQuizTab() {
     return (
         <>
             <Container fluid>
-                <h2 className="text-center mb-4 fw-bold">Stwórz quiz</h2>
-                <Row className="justify-content-left">
+                <Row className="justify-content-left border rounded p-5">
                     <Col xs={12} md={8} lg={6}>
                         <Card className="border-0">
                             <Card.Body>

@@ -17,7 +17,6 @@ export function ExamRulesTab() {
     return (
         <>
             <Container fluid>
-                <h2 className="text-center mb-4 fw-bold">Zasady Egzaminu</h2>
                 <Row className="justify-content-left">
                     <Col xs={12} md={8} lg={6}>
                         <Card className="border-0">

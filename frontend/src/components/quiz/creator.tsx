@@ -35,11 +35,11 @@ export function CreatorMenu() {
                 <Row className="justify-content-between g-4 mt-5" lg={12}>
                     <Col xs={12} md={4} lg={3} className="left-panel">
                         <Card className="border-0 w-100 d-flex justify-content-center align-items-center">
-                            <Card.Title className="lg">Stwórz test</Card.Title>
+                            <Card.Title className="lg">Kreator</Card.Title>
                             <Card.Body className="w-100">
                                 <div className="tabs">
-                                    <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'createQuiz' ? 'active' : ''}`} onClick={() => setTab('createQuiz')}>Stwórz Quiz</div>
-                                    <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'addQuestion' ? 'active' : ''}`} onClick={() => setTab('addQuestion')}>Dodaj Pytania</div>
+                                    <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'createQuiz' ? 'active' : ''}`} onClick={() => setTab('createQuiz')}>Tutuł i Opis</div>
+                                    <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'addQuestion' ? 'active' : ''}`} onClick={() => setTab('addQuestion')}>Pytania</div>
                                     <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'examRules' ? 'active' : ''}`} onClick={() => setTab('examRules')}>Zasady Egzaminu</div>
                                     <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'startScreen' ? 'active' : ''}`} onClick={() => setTab('startScreen')}>Ekran Startowy</div>
                                     <div className={`w-100 p-3 rounded shadow-sm ${activeTab == 'summaryScreen' ? 'active' : ''}`} onClick={() => setTab('summaryScreen')}>Ekran Podsumowania</div>
