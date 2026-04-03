@@ -12,16 +12,21 @@ import { addQuestionValidationSchema } from "../../../formsValidationSchema/addQ
 
 export function AddQuestionTab() {
     const resolver = yupResolver(addQuestionValidationSchema)
-    const { register, handleSubmit, formState: {errors}, setValue } = useForm<Questions>({ resolver });
- 
+    const { register, handleSubmit, formState: {errors}, setValue } = useForm<Questions>({ 
+        resolver: resolver,
+        defaultValues: { 
+            id: crypto.randomUUID()
+        }
+    });
+
     const [choice, setChoice] = useState('singleChoice');
     const [questionContent, setQuestion] = useState("")
 
     const [answers, setAnswers] = useState<Answers[]>([
-        {id: crypto.randomUUID(), content: 'Zapisz odpowiedz na pytanie', isCorrect: false},
-        {id: crypto.randomUUID(), content: 'Zapisz odpowiedz na pytanie', isCorrect: false},
-        {id: crypto.randomUUID(), content: 'Zapisz odpowiedz na pytanie', isCorrect: false},
-        {id: crypto.randomUUID(), content: 'Zapisz odpowiedz na pytanie', isCorrect: false},
+        {id: crypto.randomUUID(), content: '', isCorrect: false},
+        {id: crypto.randomUUID(), content: '', isCorrect: false},
+        {id: crypto.randomUUID(), content: '', isCorrect: false},
+        {id: crypto.randomUUID(), content: '', isCorrect: false},
     ])
 
     const addAnswer = () => {
@@ -60,7 +65,7 @@ export function AddQuestionTab() {
     // updates field values in react hook form state
 
     useEffect(() => {
-        setValue('answers', answers);
+        setValue('answers', answers, { shouldValidate: true });
     }, [answers]);
 
     useEffect(() => {
@@ -72,8 +77,7 @@ export function AddQuestionTab() {
     }, [choice])
 
     const onSubmit: SubmitHandler<Questions> = (data: Questions) => {
-        let newData = {...data, id: crypto.randomUUID()}
-        console.log(newData)
+        console.log(data)
     }; 
     
     return (
@@ -84,7 +88,7 @@ export function AddQuestionTab() {
                         <Col xs={12} md={8} lg={6}>
                             <Card className="border-0">
                                 <Card.Body>
-                                    <Form onSubmit={handleSubmit(onSubmit)}>
+                                    <Form onSubmit={handleSubmit(onSubmit, (err) => console.log("BŁĘDY:", err))}>
                                         <Row>        
                                             <Form.Group className="mb-3" controlId="title">
                                                 <Form.Label className="small fw-semibold">Zapisz Pytanie</Form.Label>
@@ -115,7 +119,7 @@ export function AddQuestionTab() {
                                                     images_upload_handler: (blobInfo: any, progress: any) => image_handler(blobInfo, progress)
                                                     }}
                                                 />
-                                                {errors.question ? <Form.Label className="fs-6 text-muted-danger">{errors.question.message}</Form.Label> : null}
+                                                {errors.question ? <Form.Label className="fs-6 text-danger">{errors.question.message}</Form.Label> : null}
                                             </Form.Group>
                                                 
                                             <Form.Group className="mb-4" controlId="visibility">
@@ -124,7 +128,7 @@ export function AddQuestionTab() {
                                                     <option value="singleChoice">Jednokrotnego Wyboru</option>
                                                     <option value="multiChoice">Wielokrotnego Wyboru</option>
                                                 </Form.Select>
-                                                {errors.type ? <Form.Label className="fs-6 text-muted-danger">{errors.type.message}</Form.Label> : null}
+                                                {errors.type ? <Form.Label className="fs-6 text-danger">{errors.type.message}</Form.Label> : null}
                                             </Form.Group>
                                         </Row>
 
@@ -133,6 +137,7 @@ export function AddQuestionTab() {
                                             <Form.Group className="d-flex justify-content-between flex-column">
                                                 {answers.map((answer, index) => (
                                                     <>
+                                                    {errors.answers?.[index]?.message}
                                                     <li key={index}>
                                                         <Form.Label className="small fw-semibold">Odp. {index+1})</Form.Label>
                                                         <div className="w-100 my-3 d-flex flex-row answers">
@@ -142,7 +147,7 @@ export function AddQuestionTab() {
                                                                 licenseKey="gpl"
                                                                 value={answer.content}
                                                                 onEditorChange={(content) => updateAnswer(answer.id, content)}
-                                                                initialValue="<p>Zapisz odpowiedz na pytanie</p>"
+                                                                initialValue="<p>Zapisz odpowiedz</p>"
                                                                 init={{
                                                                 base_url: '/tinymce', 
                                                                 suffix: '.min',
@@ -165,10 +170,11 @@ export function AddQuestionTab() {
                                                             />
                                                             <CloseButton className="m-2" onClick={(e) => removeAnswer(answer.id)}/>
                                                         </div>
+                                                       {errors.answers?.[index]?.content?.message ? <Form.Label className="text-danger">{errors.answers?.[index]?.content?.message}</Form.Label> : null}
                                                     </li>
                                                 </>
                                                 ))}
-                                                {errors.answers ? <Form.Label className="fs-6 text-muted-danger">{errors.answers.message}</Form.Label> : null}
+                                                {errors.answers ? <Form.Label className="fs-6 text-danger">{errors.answers.message}</Form.Label> : null}
                                             </Form.Group>
 
                                             <Row>
@@ -185,7 +191,7 @@ export function AddQuestionTab() {
                                             <Form.Group>
                                                 <Form.Label className="small fw-semibold">Podaj punktacje pytania</Form.Label>
                                                 <Form.Control type="number" defaultValue={1} {...register('questionWeight')}/>
-                                                 {errors.questionWeight ? <Form.Label className="fs-6 text-muted-danger">{errors.questionWeight.message}</Form.Label> : null}
+                                                 {errors.questionWeight ? <Form.Label className="fs-6 text-danger">{errors.questionWeight.message}</Form.Label> : null}
                                             </Form.Group>
                                         </Row>
         

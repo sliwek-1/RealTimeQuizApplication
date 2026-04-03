@@ -4,7 +4,7 @@ export type Choice = "singleChoice" | "multiChoice";
 export interface Answers {
     id: string,
     content: string,
-    isCorrect: boolean,
+    isCorrect?: boolean,
 }
 
 export interface AddAnswerToStorage {
