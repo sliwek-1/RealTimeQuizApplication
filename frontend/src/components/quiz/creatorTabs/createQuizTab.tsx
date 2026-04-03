@@ -3,8 +3,7 @@ import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import type { CreateExam, ExamState } from "../../../types/creatorPanelTypes";
 import type { SubmitHandler } from "react-hook-form";
 import { addExamToStorage } from "../../../features/examConfigurationSlice";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../../store";
+import { useDispatch } from "react-redux";
 import { persist } from "../../../utils/persistExamConfigurationData";
 
 export function CreateQuizTab() {
@@ -36,7 +35,7 @@ export function CreateQuizTab() {
                                             <Form.Control as="textarea" rows={2} placeholder="Krótki opis..."  {...register('description')}/>
                                         </Form.Group>
                     
-                                        <Form.Group className="mb-4" controlId="visibility">
+                                        <Form.Group className="mb-4">
                                             <Form.Label className="small fw-semibold">Widoczność sesji</Form.Label>
                                             <Form.Select  {...register('status')}>
                                                 <option value="">Wybierz jedną z opcji</option>

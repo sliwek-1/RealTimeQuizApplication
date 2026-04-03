@@ -1,9 +1,18 @@
 import { useState } from 'react';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
+import {useForm} from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import type { ExamRules } from '../../../types/creatorPanelTypes';
+import type { SubmitHandler } from 'react-hook-form';
 
 export function ExamRulesTab() {
 
+    const { register, handleSubmit, formState: {errors} } = useForm<ExamRules>({ })
     const [examTime, setExamTime] = useState("byExam");
+
+    const onSubmit: SubmitHandler<ExamRules> = (data: ExamRules) => {
+        console.log(data)
+    }
 
     return (
         <>
@@ -13,16 +22,16 @@ export function ExamRulesTab() {
                     <Col xs={12} md={8} lg={6}>
                         <Card className="border-0">
                             <Card.Body>
-                                <Form>
+                                <Form onSubmit={handleSubmit(onSubmit)}>
                                     <Row>        
                                         <Form.Group className="mb-3" controlId="title">
                                             <Form.Label className="small fw-semibold">Czas na Odp. (s)</Form.Label>
                                             <div className='d-flex justify-content-between align-items-center w-25'>
                                                 <Form.Check type="radio" className='m-2' name='czas' onChange={() => setExamTime('byAnswer')} />
                                                 {examTime == 'byAnswer' ?
-                                                    <Form.Control type="number" defaultValue={30} />
+                                                    <Form.Control type="number" defaultValue={30} {...register('isAnswerTime')} />
                                                 : 
-                                                    <Form.Control type="number" defaultValue={30} disabled/>
+                                                    <Form.Control type="number" defaultValue={30}  disabled/>
                                                 }
                                             </div>
                                         </Form.Group>
@@ -31,45 +40,27 @@ export function ExamRulesTab() {
                                             <div className='d-flex justify-content-between align-items-center w-25'>
                                                 <Form.Check type="radio" className='m-2' name='czas' onChange={() => setExamTime('byExam')} defaultChecked/>
                                                 {examTime == 'byExam' ?
-                                                    <Form.Control type="number" defaultValue={60} />
+                                                    <Form.Control type="number" defaultValue={60}  {...register('isExamTime')} />
                                                 : 
-                                                    <Form.Control type="number" defaultValue={60} disabled/>
+                                                    <Form.Control type="number" defaultValue={60}  disabled/>
                                                 }
                                             </div>
                                         </Form.Group>
-                    
-                                        <Form.Group className="mb-3" controlId="description">
-                                            <Form.Label className="small fw-semibold">Metoda ostrzegania o wykroczeniach</Form.Label>
-                                            <div className='d-flex align-items-center w-75'>
-                                                <Col>
-                                                        <Form.Label>Wyłącz</Form.Label>
-                                                </Col>
-                                                <Col>
-                                                        <Form.Check type='radio' className='m-2' name='examStartMethod' defaultChecked/>
-                                                </Col>
-                                            </div>
-                                            <div className='d-flex align-items-center w-75'>
-                                                <Col>
-                                                    <Form.Label>Wyślij ostrzeżenie</Form.Label>
-                                                </Col>
-                                                <Col>
-                                                    <Form.Check type='radio' className='m-2' name='examStartMethod'/>
-                                                </Col>  
-                                            </div>
-                                            <div className='d-flex justify-content-between align-items-center w-75'>
-                                                <Col>
-                                                    <Form.Label>Wyślij ostrzeżenie i wyrzuć z egzaminu</Form.Label>
-                                                </Col>
-                                                <Col>
-                                                    <Form.Check type='radio' className='m-2' name='examStartMethod'/>
-                                                </Col>  
-                                            </div>
+                                        <Form.Group className="mb-4">
+                                            <Form.Label className="small fw-semibold">System wykrywania wykroczeń</Form.Label>
+                                            <Form.Select  {...register('punishmentMethod')}>
+                                                <option value="Off" defaultChecked>Wyłącz</option>
+                                                <option value="sendWarnings">Wyślij ostrzeżenie</option>
+                                                <option value="sendWarningsAndKick">Wyślij ostrzeżenie i wyrzuć z egzaminu</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <Form.Group>
                                             <div className='d-flex justify-content-between align-items-center w-75'>
                                                 <Col>
                                                     <Form.Label>Liczba wykroczeni przed wyrzuceniem</Form.Label>
                                                 </Col>
                                                 <Col>
-                                                    <Form.Control type="number" className='w-25' defaultValue={5} />
+                                                    <Form.Control type="number" className='w-25' {...register('chances')} defaultValue={5} />
                                                 </Col>
                                             </div>
                                             <Form.Label className='text-muted fs-7'> 
@@ -81,7 +72,7 @@ export function ExamRulesTab() {
                                                     <Form.Label>Próg zaliczenia egzaminu (%)</Form.Label>
                                                 </Col>
                                                 <Col>
-                                                    <Form.Control type="number" className='w-35' defaultValue={50} min={0} max={100}/>
+                                                    <Form.Control type="number" className='w-35' {...register('passRate')} defaultValue={50} min={0} max={100}/>
                                                 </Col>
                                         </div>
                                     </Row>

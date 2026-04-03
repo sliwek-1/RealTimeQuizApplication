@@ -9,7 +9,6 @@ import type { SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addQuestionValidationSchema } from "../../../formsValidationSchema/addQuestionSchema";
 
-
 export function AddQuestionTab() {
     const resolver = yupResolver(addQuestionValidationSchema)
     const { register, handleSubmit, formState: {errors}, setValue } = useForm<Questions>({ 
