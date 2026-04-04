@@ -1,19 +1,23 @@
 import { useForm, Controller, useFieldArray, useWatch } from "react-hook-form"
 import { Form, Button, Container, Row, Col, Card, CloseButton } from 'react-bootstrap';
-import type { Questions, Answers, Choice } from "../../../types/creatorPanelTypes";
+import type { ExamState, Questions } from "../../../types/creatorPanelTypes";
 import type { SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addQuestionValidationSchema } from "../../../formsValidationSchema/addQuestionSchema";
 import { useDispatch, useSelector } from "react-redux";
 import { addQuestionToStorage } from "../../../features/examConfigurationSlice";
 import { EditorComponent } from "../editorComponent";
+import { useEffect } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { persist } from "../../../utils/persistExamConfigurationData";
  
 export function AddQuestionForm() {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch();
 
     const resolver = yupResolver(addQuestionValidationSchema)
-    const {register, handleSubmit, control} = useForm({ 
+    const {register, handleSubmit, reset, control, formState: { isSubmitSuccessful }} = useForm({ 
         resolver: resolver,
         defaultValues: {
             answers: [
@@ -33,10 +37,20 @@ export function AddQuestionForm() {
         defaultValue: "singleChoice"
     })
 
-    const onSubmit: SubmitHandler<Questions> = (data: Questions) => {
+    const onSubmit: SubmitHandler<Questions> = (data) => {
         console.log(data)
         dispatch(addQuestionToStorage(data));
+        persist.saveQuestionsExam(data)
     }
+
+    useEffect(() => {
+        if(isSubmitSuccessful) {
+            reset();
+            navigate({
+                to: '/quiz/questions'
+            })
+        }
+    }, [isSubmitSuccessful, reset])
     
     return (
         <>

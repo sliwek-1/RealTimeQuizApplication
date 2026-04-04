@@ -8,8 +8,6 @@ export const Route = createFileRoute('/quiz/question/list')({
   component: RouteComponent,
   loader: ({ params }) => {
     const questions = store.getState();
-
-
     return {questions}
   }
 })

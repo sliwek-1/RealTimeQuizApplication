@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -34,6 +35,11 @@ const SettingsRoute = SettingsRouteImport.update({
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -67,50 +73,51 @@ const SessionCreateRoute = SessionCreateRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuizSummaryRoute = QuizSummaryRouteImport.update({
-  id: '/quiz/summary',
-  path: '/quiz/summary',
-  getParentRoute: () => rootRouteImport,
+  id: '/summary',
+  path: '/summary',
+  getParentRoute: () => QuizRoute,
 } as any)
 const QuizStartScreenRoute = QuizStartScreenRouteImport.update({
-  id: '/quiz/start-screen',
-  path: '/quiz/start-screen',
-  getParentRoute: () => rootRouteImport,
+  id: '/start-screen',
+  path: '/start-screen',
+  getParentRoute: () => QuizRoute,
 } as any)
 const QuizQuestionsRoute = QuizQuestionsRouteImport.update({
-  id: '/quiz/questions',
-  path: '/quiz/questions',
-  getParentRoute: () => rootRouteImport,
+  id: '/questions',
+  path: '/questions',
+  getParentRoute: () => QuizRoute,
 } as any)
 const QuizExamRulesRoute = QuizExamRulesRouteImport.update({
-  id: '/quiz/exam-rules',
-  path: '/quiz/exam-rules',
-  getParentRoute: () => rootRouteImport,
+  id: '/exam-rules',
+  path: '/exam-rules',
+  getParentRoute: () => QuizRoute,
 } as any)
 const QuizCreatorRoute = QuizCreatorRouteImport.update({
-  id: '/quiz/creator',
-  path: '/quiz/creator',
-  getParentRoute: () => rootRouteImport,
+  id: '/creator',
+  path: '/creator',
+  getParentRoute: () => QuizRoute,
 } as any)
 const QuizQuestionListRoute = QuizQuestionListRouteImport.update({
-  id: '/quiz/question/list',
-  path: '/quiz/question/list',
-  getParentRoute: () => rootRouteImport,
+  id: '/question/list',
+  path: '/question/list',
+  getParentRoute: () => QuizRoute,
 } as any)
 const QuizQuestionAddRoute = QuizQuestionAddRouteImport.update({
-  id: '/quiz/question/add',
-  path: '/quiz/question/add',
-  getParentRoute: () => rootRouteImport,
+  id: '/question/add',
+  path: '/question/add',
+  getParentRoute: () => QuizRoute,
 } as any)
 const QuizQuestionEditIdRoute = QuizQuestionEditIdRouteImport.update({
-  id: '/quiz/question/edit/$id',
-  path: '/quiz/question/edit/$id',
-  getParentRoute: () => rootRouteImport,
+  id: '/question/edit/$id',
+  path: '/question/edit/$id',
+  getParentRoute: () => QuizRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
+  '/quiz': typeof QuizRouteWithChildren
   '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
   '/quiz/creator': typeof QuizCreatorRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
+  '/quiz': typeof QuizRouteWithChildren
   '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
   '/quiz/creator': typeof QuizCreatorRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
+  '/quiz': typeof QuizRouteWithChildren
   '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
   '/quiz/creator': typeof QuizCreatorRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/login'
+    | '/quiz'
     | '/register'
     | '/settings'
     | '/quiz/creator'
@@ -186,6 +196,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/login'
+    | '/quiz'
     | '/register'
     | '/settings'
     | '/quiz/creator'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/login'
+    | '/quiz'
     | '/register'
     | '/settings'
     | '/quiz/creator'
@@ -223,19 +235,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   LoginRoute: typeof LoginRoute
+  QuizRoute: typeof QuizRouteWithChildren
   RegisterRoute: typeof RegisterRoute
   SettingsRoute: typeof SettingsRoute
-  QuizCreatorRoute: typeof QuizCreatorRoute
-  QuizExamRulesRoute: typeof QuizExamRulesRoute
-  QuizQuestionsRoute: typeof QuizQuestionsRoute
-  QuizStartScreenRoute: typeof QuizStartScreenRoute
-  QuizSummaryRoute: typeof QuizSummaryRoute
   SessionCreateRoute: typeof SessionCreateRoute
   SessionRoomRoute: typeof SessionRoomRoute
   UsersUserIdRoute: typeof UsersUserIdRoute
-  QuizQuestionAddRoute: typeof QuizQuestionAddRoute
-  QuizQuestionListRoute: typeof QuizQuestionListRoute
-  QuizQuestionEditIdRoute: typeof QuizQuestionEditIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -252,6 +257,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -298,80 +310,97 @@ declare module '@tanstack/react-router' {
     }
     '/quiz/summary': {
       id: '/quiz/summary'
-      path: '/quiz/summary'
+      path: '/summary'
       fullPath: '/quiz/summary'
       preLoaderRoute: typeof QuizSummaryRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof QuizRoute
     }
     '/quiz/start-screen': {
       id: '/quiz/start-screen'
-      path: '/quiz/start-screen'
+      path: '/start-screen'
       fullPath: '/quiz/start-screen'
       preLoaderRoute: typeof QuizStartScreenRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof QuizRoute
     }
     '/quiz/questions': {
       id: '/quiz/questions'
-      path: '/quiz/questions'
+      path: '/questions'
       fullPath: '/quiz/questions'
       preLoaderRoute: typeof QuizQuestionsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof QuizRoute
     }
     '/quiz/exam-rules': {
       id: '/quiz/exam-rules'
-      path: '/quiz/exam-rules'
+      path: '/exam-rules'
       fullPath: '/quiz/exam-rules'
       preLoaderRoute: typeof QuizExamRulesRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof QuizRoute
     }
     '/quiz/creator': {
       id: '/quiz/creator'
-      path: '/quiz/creator'
+      path: '/creator'
       fullPath: '/quiz/creator'
       preLoaderRoute: typeof QuizCreatorRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof QuizRoute
     }
     '/quiz/question/list': {
       id: '/quiz/question/list'
-      path: '/quiz/question/list'
+      path: '/question/list'
       fullPath: '/quiz/question/list'
       preLoaderRoute: typeof QuizQuestionListRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof QuizRoute
     }
     '/quiz/question/add': {
       id: '/quiz/question/add'
-      path: '/quiz/question/add'
+      path: '/question/add'
       fullPath: '/quiz/question/add'
       preLoaderRoute: typeof QuizQuestionAddRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof QuizRoute
     }
     '/quiz/question/edit/$id': {
       id: '/quiz/question/edit/$id'
-      path: '/quiz/question/edit/$id'
+      path: '/question/edit/$id'
       fullPath: '/quiz/question/edit/$id'
       preLoaderRoute: typeof QuizQuestionEditIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof QuizRoute
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  LoginRoute: LoginRoute,
-  RegisterRoute: RegisterRoute,
-  SettingsRoute: SettingsRoute,
+interface QuizRouteChildren {
+  QuizCreatorRoute: typeof QuizCreatorRoute
+  QuizExamRulesRoute: typeof QuizExamRulesRoute
+  QuizQuestionsRoute: typeof QuizQuestionsRoute
+  QuizStartScreenRoute: typeof QuizStartScreenRoute
+  QuizSummaryRoute: typeof QuizSummaryRoute
+  QuizQuestionAddRoute: typeof QuizQuestionAddRoute
+  QuizQuestionListRoute: typeof QuizQuestionListRoute
+  QuizQuestionEditIdRoute: typeof QuizQuestionEditIdRoute
+}
+
+const QuizRouteChildren: QuizRouteChildren = {
   QuizCreatorRoute: QuizCreatorRoute,
   QuizExamRulesRoute: QuizExamRulesRoute,
   QuizQuestionsRoute: QuizQuestionsRoute,
   QuizStartScreenRoute: QuizStartScreenRoute,
   QuizSummaryRoute: QuizSummaryRoute,
-  SessionCreateRoute: SessionCreateRoute,
-  SessionRoomRoute: SessionRoomRoute,
-  UsersUserIdRoute: UsersUserIdRoute,
   QuizQuestionAddRoute: QuizQuestionAddRoute,
   QuizQuestionListRoute: QuizQuestionListRoute,
   QuizQuestionEditIdRoute: QuizQuestionEditIdRoute,
+}
+
+const QuizRouteWithChildren = QuizRoute._addFileChildren(QuizRouteChildren)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  LoginRoute: LoginRoute,
+  QuizRoute: QuizRouteWithChildren,
+  RegisterRoute: RegisterRoute,
+  SettingsRoute: SettingsRoute,
+  SessionCreateRoute: SessionCreateRoute,
+  SessionRoomRoute: SessionRoomRoute,
+  UsersUserIdRoute: UsersUserIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Questions, ExamRules, ExamState, SummaryScreen, AddAnswerToStorage, RemoveAnswerFromStorage, StartScreen, CreateExam } from '../types/creatorPanelTypes';
 
-const initialState: ExamState = {
+export const initialState: ExamState = {
     title: "",
     description: "",
     status: "private",

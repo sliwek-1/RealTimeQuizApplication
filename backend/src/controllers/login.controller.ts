@@ -37,7 +37,7 @@ export async function login(req: Request, res: Response) {
             `sessionUser:${sessionId}`,
             JSON.stringify(sessionData),
             "EX",
-            30
+            60*60*24
         );
 
         res.cookie("sessionId", sessionId, {
