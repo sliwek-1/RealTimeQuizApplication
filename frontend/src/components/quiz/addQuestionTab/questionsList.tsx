@@ -1,13 +1,22 @@
 import {Row, Col, Container, Table, Button} from "react-bootstrap";
-import type { RootState } from "../../../../store";
-import { useSelector } from "react-redux";
+import type { RootState } from "../../../store";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import type { SetVisibilityProp } from "../addQusetionTab";
-
+import type { SetVisibilityProp } from "../creatorTabs/addQusetionTab";
+import { removeQuestionFromStorage } from "../../../features/examConfigurationSlice";
 
 export function QuestionsList({ setVisibility }: SetVisibilityProp) {
 
+    const dispatch = useDispatch();
     const questions = useSelector((state: RootState) => state.examConfig.questions);
+
+    const handleUpdate = () => {
+
+    }
+
+    const handleDelete = (questionId: string) => {
+        dispatch(removeQuestionFromStorage(questionId))
+    }   
 
     return (
         <>
@@ -29,7 +38,11 @@ export function QuestionsList({ setVisibility }: SetVisibilityProp) {
                         </thead>
                         <tbody>
                             {questions.length == 0 ? 
-                                <p>Brak pytań</p>
+                                <td colSpan={4} className="h-100">
+                                    <Container className="d-flex justify-content-center align-items-center w-100 h-100" fluid>
+                                        <p>Brak pytań</p>
+                                    </Container>
+                                </td>
                             :
                                 questions.map((question, index) => (
                                     <tr>
@@ -38,7 +51,7 @@ export function QuestionsList({ setVisibility }: SetVisibilityProp) {
                                             <div dangerouslySetInnerHTML={{ __html: question.question }} />
                                         </td>
                                         <td><Button variant="primary" size="sm">Edytuj</Button></td>
-                                        <td><Button variant="danger" size="sm">Usuń</Button></td>
+                                        <td><Button variant="danger" size="sm" onClick={() => handleDelete(question.id)}>Usuń</Button></td>
                                     </tr>
                                 ))
                             }

@@ -1,6 +1,6 @@
 import { Container } from 'react-bootstrap';
-import { AddQuestionForm } from './addQuestionTab/addQuestionForm';
-import { QuestionsList } from './addQuestionTab/questionsList';
+import { AddQuestionForm } from '../addQuestionTab/addQuestionForm';
+import { QuestionsList } from '../addQuestionTab/questionsList';
 import { useState } from 'react';
 
 export interface SetVisibilityProp {
