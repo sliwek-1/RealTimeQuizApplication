@@ -16,7 +16,7 @@ import { EditorComponent } from "../editorComponent";
 export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
 
     const resolver = yupResolver(addQuestionValidationSchema)
-    const {register, handleSubmit, watch ,control} = useForm({ 
+    const {register, handleSubmit, control} = useForm({ 
         resolver: resolver,
         defaultValues: {
             answers: [
