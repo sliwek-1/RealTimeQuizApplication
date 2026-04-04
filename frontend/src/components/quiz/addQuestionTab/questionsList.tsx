@@ -23,7 +23,7 @@ export function QuestionsList() {
         <>
             <Container className="p-5 border rounded">
                 <div className="w-100 d-flex justify-content-end">
-                    <Button variant="success" size="sm">
+                    <Button variant="success" size="sm" href="/quiz/question/add">
                         Dodaj
                     </Button>
                 </div>

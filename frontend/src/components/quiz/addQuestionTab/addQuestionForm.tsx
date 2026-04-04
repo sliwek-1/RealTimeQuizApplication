@@ -68,7 +68,6 @@ export function AddQuestionForm() {
                                             <Form.Group>
                                                 <Form.Label className="small fw-semibold md-2">Podaj punktacje pytania</Form.Label>
                                                 <Form.Control type="number" defaultValue={1} {...register('questionWeight')}/>
-                                                
                                             </Form.Group>
                                         </Row>
 
@@ -77,7 +76,7 @@ export function AddQuestionForm() {
                                             <Form.Group className="d-flex justify-content-between flex-column">
                                                 
                                                 {fields.map((answer, index) => (
-                                                    <div className="d-flex g-3" key={answer.id}>
+                                                    <div className="d-flex my-3 g-3" key={answer.id}>
                                                         <Controller 
                                                             control={control}
                                                             name={`answers.${index}.isCorrect`}

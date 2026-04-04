@@ -10,7 +10,7 @@ export function CreatorMenu() {
             <Container>
                     <Navbar>
                         <Nav>
-                            <Nav.Link href="/quiz/init">Tutuł i Opis</Nav.Link>
+                            <Nav.Link href="/quiz/creator">Tutuł i Opis</Nav.Link>
                             <Nav.Link href="/quiz/questions">Menadżer Pytań</Nav.Link>
                             <Nav.Link href="/quiz/exam-rules">Zasady Egzaminu</Nav.Link>
                             <Nav.Link href="/quiz/start-screen">Ekran Startowy</Nav.Link>
