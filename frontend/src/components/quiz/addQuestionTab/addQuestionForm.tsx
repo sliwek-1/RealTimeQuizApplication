@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
 import { useForm, Controller, useFieldArray, useWatch } from "react-hook-form"
 import { Form, Button, Container, Row, Col, Card, CloseButton } from 'react-bootstrap';
-import { Editor } from '@tinymce/tinymce-react'; 
-import { image_handler } from "../../../utils/imageHandler";
 import type { Questions, Answers, Choice } from "../../../types/creatorPanelTypes";
 import type { SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,6 +11,8 @@ import type { SetVisibilityProp } from "../creatorTabs/addQusetionTab";
 import { EditorComponent } from "../editorComponent";
 
 export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
+
+    const dispatch = useDispatch();
 
     const resolver = yupResolver(addQuestionValidationSchema)
     const {register, handleSubmit, control} = useForm({ 
@@ -41,6 +40,9 @@ export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
 
     const onSubmit: SubmitHandler<Questions> = (data: Questions) => {
         console.log(data)
+        dispatch(addQuestionToStorage(data));
+
+        setVisibility(false);
     }
     
     return (
@@ -100,9 +102,6 @@ export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
                                                         <CloseButton onClick={() => remove(index)}/>
                                                     </div>
                                                 ))}
-
-                                                           
-                                                
                                             </Form.Group>
 
                                             <Row>

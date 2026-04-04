@@ -38,14 +38,16 @@ export function QuestionsList({ setVisibility }: SetVisibilityProp) {
                         </thead>
                         <tbody>
                             {questions.length == 0 ? 
-                                <td colSpan={4} className="h-100">
-                                    <Container className="d-flex justify-content-center align-items-center w-100 h-100" fluid>
-                                        <p>Brak pytań</p>
-                                    </Container>
-                                </td>
+                                <tr>
+                                    <td colSpan={4} className="h-100">
+                                        <Container className="d-flex justify-content-center align-items-center w-100 h-100" fluid>
+                                            <p>Brak pytań</p>
+                                        </Container>
+                                    </td>
+                                </tr>
                             :
                                 questions.map((question, index) => (
-                                    <tr>
+                                    <tr key={question.id}>
                                         <td>{index + 1}</td>
                                         <td>
                                             <div dangerouslySetInnerHTML={{ __html: question.question }} />
