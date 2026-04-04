@@ -6,11 +6,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { addQuestionValidationSchema } from "../../../formsValidationSchema/addQuestionSchema";
 import { useDispatch, useSelector } from "react-redux";
 import { addQuestionToStorage } from "../../../features/examConfigurationSlice";
-import type { RootState } from "../../../store";
-import type { SetVisibilityProp } from "../creatorTabs/addQusetionTab";
 import { EditorComponent } from "../editorComponent";
-
-export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
+ 
+export function AddQuestionForm() {
 
     const dispatch = useDispatch();
 
@@ -19,11 +17,8 @@ export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
         resolver: resolver,
         defaultValues: {
             answers: [
-                {id: crypto.randomUUID(), content: '', isCorrect: false},
-                {id: crypto.randomUUID(), content: '', isCorrect: false},
-                {id: crypto.randomUUID(), content: '', isCorrect: false},
-                {id: crypto.randomUUID(), content: '', isCorrect: false},
-            ] 
+                
+            ]
         }
     });
 
@@ -41,13 +36,11 @@ export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
     const onSubmit: SubmitHandler<Questions> = (data: Questions) => {
         console.log(data)
         dispatch(addQuestionToStorage(data));
-
-        setVisibility(false);
     }
     
     return (
         <>
-                <Container fluid className="mb-5">
+                <Container className="mb-5">
                     <Row className="justify-content-start border rounded p-5">
                         <Col xs={12} md={8} lg={6}>
                             <Card className="border-0">
@@ -57,7 +50,7 @@ export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
                                         <Row>        
                                             <Form.Group className="mb-3" controlId="title">
                                                 <Form.Label className="small fw-semibold">Zapisz Pytanie</Form.Label>
-                                                <EditorComponent control={control} name="question"/>
+                                                <EditorComponent control={control} name="question" />
                                                 
                                             </Form.Group>
                                                 

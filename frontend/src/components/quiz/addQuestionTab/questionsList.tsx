@@ -2,16 +2,17 @@ import {Row, Col, Container, Table, Button} from "react-bootstrap";
 import type { RootState } from "../../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import type { SetVisibilityProp } from "../creatorTabs/addQusetionTab";
 import { removeQuestionFromStorage } from "../../../features/examConfigurationSlice";
+import type { Questions } from "../../../types/creatorPanelTypes";
 
-export function QuestionsList({ setVisibility }: SetVisibilityProp) {
+export function QuestionsList() {
 
     const dispatch = useDispatch();
     const questions = useSelector((state: RootState) => state.examConfig.questions);
 
-    const handleUpdate = () => {
-
+    const handleUpdate = (questionId: string) => {
+        let question = questions.find(quest => quest.id == questionId)
+        console.log(question)
     }
 
     const handleDelete = (questionId: string) => {
@@ -20,9 +21,9 @@ export function QuestionsList({ setVisibility }: SetVisibilityProp) {
 
     return (
         <>
-            <Container fluid>
+            <Container className="p-5 border rounded">
                 <div className="w-100 d-flex justify-content-end">
-                    <Button variant="success" size="sm" onClick={() => setVisibility(true)}>
+                    <Button variant="success" size="sm">
                         Dodaj
                     </Button>
                 </div>
@@ -52,7 +53,7 @@ export function QuestionsList({ setVisibility }: SetVisibilityProp) {
                                         <td>
                                             <div dangerouslySetInnerHTML={{ __html: question.question }} />
                                         </td>
-                                        <td><Button variant="primary" size="sm">Edytuj</Button></td>
+                                        <td><Button variant="primary" size="sm" onClick={() => handleUpdate(question.id)}>Edytuj</Button></td>
                                         <td><Button variant="danger" size="sm" onClick={() => handleDelete(question.id)}>Usuń</Button></td>
                                     </tr>
                                 ))
