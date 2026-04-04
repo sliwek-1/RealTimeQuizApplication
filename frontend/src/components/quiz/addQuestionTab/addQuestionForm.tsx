@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useForm, Controller, useFieldArray } from "react-hook-form"
+import { useForm, Controller, useFieldArray, useWatch } from "react-hook-form"
 import { Form, Button, Container, Row, Col, Card, CloseButton } from 'react-bootstrap';
 import { Editor } from '@tinymce/tinymce-react'; 
 import { image_handler } from "../../../utils/imageHandler";
@@ -15,13 +15,28 @@ import { EditorComponent } from "../editorComponent";
 
 export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
 
-    //const resolver = yupResolver(addQuestionValidationSchema)
-    const {register, handleSubmit, control} = useForm({  });
-    const [choice, setChoice] = useState("multiChoice")
+    const resolver = yupResolver(addQuestionValidationSchema)
+    const {register, handleSubmit, watch ,control} = useForm({ 
+        resolver: resolver,
+        defaultValues: {
+            answers: [
+                {id: crypto.randomUUID(), content: '', isCorrect: false},
+                {id: crypto.randomUUID(), content: '', isCorrect: false},
+                {id: crypto.randomUUID(), content: '', isCorrect: false},
+                {id: crypto.randomUUID(), content: '', isCorrect: false},
+            ] 
+        }
+    });
 
-    const {fields, append, remove, update} = useFieldArray({
+    const {fields, append, remove} = useFieldArray({
         control,
         name: "answers"
+    })
+
+    const selectedChoice = useWatch({
+        control,
+        name: "type",
+        defaultValue: "singleChoice"
     })
 
     const onSubmit: SubmitHandler<Questions> = (data: Questions) => {
@@ -36,6 +51,7 @@ export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
                             <Card className="border-0">
                                 <Card.Body>
                                     <Form onSubmit={handleSubmit(onSubmit, (err) => console.log("BŁĘDY:", err))}>
+                                        <input hidden value={crypto.randomUUID()} {...register("id")}/>
                                         <Row>        
                                             <Form.Group className="mb-3" controlId="title">
                                                 <Form.Label className="small fw-semibold">Zapisz Pytanie</Form.Label>
@@ -45,7 +61,7 @@ export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
                                                 
                                             <Form.Group className="mb-4" controlId="visibility">
                                                 <Form.Label className="small fw-semibold">Typ pytania</Form.Label>
-                                                <Form.Select onChange={(e) => setChoice(e.currentTarget.value)}>
+                                                <Form.Select {...register("type")}>
                                                     <option value="singleChoice">Jednokrotnego Wyboru</option>
                                                     <option value="multiChoice">Wielokrotnego Wyboru</option>
                                                 </Form.Select>
@@ -72,7 +88,7 @@ export function AddQuestionForm({ setVisibility }: SetVisibilityProp) {
                                                             name={`answers.${index}.isCorrect`}
                                                             render={({field: {onChange, value }}) => (
                                                                 <Form.Check 
-                                                                    type={choice == 'singleChoice' ? 'radio' : 'checkbox'} 
+                                                                    type={selectedChoice == 'singleChoice' ? 'radio' : 'checkbox'} 
                                                                     checked={value}  
                                                                     name="choice" 
                                                                     className="m-3" 
