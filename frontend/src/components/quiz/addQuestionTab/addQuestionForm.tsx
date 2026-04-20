@@ -9,7 +9,7 @@ import { addQuestionToStorage } from "../../../features/examConfigurationSlice";
 import { EditorComponent } from "../editorComponent";
 import { useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { persist } from "../../../utils/persistExamConfigurationData";
+import { persist } from "../../../utils/persistExamConfigurationData-old";
  
 export function AddQuestionForm() {
 
