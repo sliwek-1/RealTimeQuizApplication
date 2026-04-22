@@ -10,6 +10,7 @@ import loginRouter from "./routes/login.ts";
 import registerRouter from "./routes/register.ts";
 import whoamiRouter from "./routes/whoami.ts";
 import sessionRouter from "./routes/session.ts";
+import quizCreatorRouter from "./routes/quiz-creator/setupQuiz.ts";
 import mongoose from "mongoose";
 import dotenv from "dotenv"
 import cookieParser from 'cookie-parser';
@@ -61,6 +62,7 @@ app.use('/api/', loginRouter);
 app.use('/api/', registerRouter);
 app.use('/api/', whoamiRouter);
 app.use('/api/', sessionRouter);
+app.use('/api/quiz/', quizCreatorRouter);
 
 
 

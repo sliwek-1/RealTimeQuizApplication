@@ -4,13 +4,16 @@ import type { CreateExam, ExamState } from "../../../types/creatorPanelTypes";
 import type { SubmitHandler } from "react-hook-form";
 import { addExamToStorage } from "../../../features/examConfigurationSlice";
 import { useDispatch } from "react-redux";
+import { useSetupQuiz } from "../../../hooks/quiz-creator/createQuiz";
 
 export function CreateQuizTab() {
     const dispatch = useDispatch();
+    const {setup, isLoading} = useSetupQuiz();
     // const exam = useSelector((state: RootState) => state.examConfig)
     const { register, handleSubmit, formState: {errors} } = useForm<CreateExam>({  });
     const onSubmit: SubmitHandler<CreateExam> = (data: CreateExam) => {
         dispatch(addExamToStorage(data))
+        setup(data);
     };  
     
     return (
